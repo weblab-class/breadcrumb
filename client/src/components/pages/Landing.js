@@ -1,5 +1,5 @@
 import "../../utilities.css";
-import "./Skeleton.css";
+import "./Landing.css";
 
 import GoogleLogin, { GoogleLogout } from "react-google-login";
 import React, { Component } from "react";
@@ -21,7 +21,10 @@ class Landing extends Component {
   render() {
     return (
       <>
-        {" "}
+        <div>
+        <h1>🍞</h1>
+        <h2>Breadcrumb...</h2>
+        <h3>Scatter your breadcrumbs on your next journey.</h3>
         {this.props.userId ? (
           <GoogleLogout
             clientId={GOOGLE_CLIENT_ID}
@@ -36,8 +39,8 @@ class Landing extends Component {
             onSuccess={this.props.handleLogin}
             onFailure={(err) => console.log(err)}
           />
-        )}{" "}
-        <p> test </p>{" "}
+        )}
+        </div>
       </>
     );
   }

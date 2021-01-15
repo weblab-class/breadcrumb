@@ -30,6 +30,8 @@
     --s: 8px;
     --m: 16px;
     --l: 24px;
+    --xl: 32px;
+    --xxl: 40px;
     --titlefont: "DM Serif Display";
     --bodyfont: "DM Sans";
 }
