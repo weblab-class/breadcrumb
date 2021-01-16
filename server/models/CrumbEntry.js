@@ -1,15 +1,16 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const { Schema } = mongoose;
 
 const crumbEntrySchema = new Schema({
-    title: String,
-    description: String,
-    latitude: Number,
-    longitude: Number,
-    // picture: String tbd
-})
+  creator_id: String,
+  title: String,
+  description: String,
+  latitude: Number,
+  longitude: Number,
+  //TODO add photo support
+});
 
-const CrumbEntry = mongoose.model('CrumbEntry', crumbEntrySchema);
+const CrumbEntry = mongoose.model("CrumbEntry", crumbEntrySchema);
 
 module.exports = CrumbEntry;
