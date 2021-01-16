@@ -11,6 +11,8 @@ const express = require("express");
 
 // import models so we can interact with the database
 const User = require("./models/user");
+const CrumbEntry = require("./models/CrumbEntry");
+const JourneyPost = require("./models/JourneyPost")
 
 // import authentication library
 const auth = require("./auth");
