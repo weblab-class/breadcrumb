@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { Router } from "@reach/router";
+import { navigate, Router } from "@reach/router";
 import NotFound from "./pages/NotFound.js";
 import Landing from "./pages/Landing.js";
+import Profile from "./pages/Profile.js";
 
 import "../utilities.css";
 
@@ -15,9 +16,9 @@ import { get, post } from "../utilities";
 class App extends Component {
   // makes props available in this component
   constructor(props) {
-    super(props);
-    this.state = {
-      userId: undefined,
+  super(props);
+  this.state = {
+    userId: undefined,
     };
   }
 
@@ -26,6 +27,7 @@ class App extends Component {
       if (user._id) {
         // they are registed in the database, and currently logged in.
         this.setState({ userId: user._id });
+        
       }
     });
   }
@@ -44,7 +46,12 @@ class App extends Component {
     post("/api/logout");
   };
 
+  afterLogin = () => {
+    navigate('/profile/' + userId);
+  };
+
   render() {
+    console.log(this.state);
     return (
       <>
         <Router>
@@ -54,8 +61,12 @@ class App extends Component {
             handleLogout={this.handleLogout}
             userId={this.state.userId}
           />
+           <Profile path="/profile/:userId" />
           <NotFound default />
+          
+
         </Router>
+
       </>
     );
   }
