@@ -3,12 +3,13 @@ import { navigate, Router } from "@reach/router";
 import NotFound from "./pages/NotFound.js";
 import Landing from "./pages/Landing.js";
 import Profile from "./pages/Profile.js";
+import MakeJourney from "./pages/MakeJourney";
 
 import "../utilities.css";
 
 import { socket } from "../client-socket.js";
-
 import { get, post } from "../utilities";
+
 
 /**
  * Define the "App" component as a class.
@@ -62,11 +63,11 @@ class App extends Component {
             userId={this.state.userId}
           />
            <Profile path="/profile/:userId" />
+           <MakeJourney path="/makejourney" userId={this.state.userId}/>
           <NotFound default />
           
 
-        </Router>
-
+        </Router>  
       </>
     );
   }
