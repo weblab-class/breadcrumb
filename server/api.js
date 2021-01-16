@@ -11,8 +11,8 @@ const express = require("express");
 
 // import models so we can interact with the database
 const User = require("./models/user");
-const CrumbEntry = require("./models/CrumbEntry");
-const JourneyPost = require("./models/JourneyPost")
+const JourneyPost = require("./models/journeyPost");
+const CrumbEntry = require("./models/crumbEntry");
 
 // import authentication library
 const auth = require("./auth");
@@ -36,13 +36,62 @@ router.get("/whoami", (req, res) => {
 
 router.post("/initsocket", (req, res) => {
   // do nothing if user not logged in
-  if (req.user) socketManager.addUser(req.user, socketManager.getSocketFromSocketID(req.body.socketid));
+  if (req.user)
+    socketManager.addUser(req.user, socketManager.getSocketFromSocketID(req.body.socketid));
   res.send({});
 });
 
-// |------------------------------|
-// | write your API methods below!|
-// |------------------------------|
+router.post("/journey", auth.ensureLoggedIn, (req, res) => {
+  const newJourney = new JourneyPost({
+    creator_id: req.user._id,
+    thumbnail: req.body.thumbnail,
+    crumbs: req.body.crumbs,
+  });
+
+  newJourney.save().then((journey) => res.send(journey));
+});
+
+router.get("/journeys", (req, res) => {
+  JourneyPost.find({
+    creator_id: req.user._id,
+  }).then((journeys) => res.send(journeys));
+});
+
+router.post("/crumb", auth.ensureLoggedIn, (req, res) => {
+  const newCrumb = new CrumbEntry({
+    creator_id: req.user._id,
+    title: req.body.title,
+    description: req.body.description,
+    latitude: req.body.latitude,
+    longitude: req.body.longitude,
+  });
+
+  newCrumb.save().then((crumb) => res.send(crumb));
+});
+
+router.get("/user", (req, res) => {
+  User.findById(req.query.userid).then((user) => {
+    res.send(user);
+  });
+});
+
+router.post("/user/bio", (req, res) => {
+  console.log(req.body);
+  User.findById(req.user._id).then((user) => {
+    user.bio = req.body.content;
+    user.save();
+    res.send(user);
+  });
+});
+
+router.post("/user/location", (req, res) => {
+  console.log(req.body);
+  User.findById(req.user._id).then((user) => {
+    user.location = req.body.content;
+    user.save();
+    res.send(user);
+  });
+});
 
 // anything else falls to this "not found" case
 router.all("*", (req, res) => {
