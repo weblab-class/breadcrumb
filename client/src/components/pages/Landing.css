@@ -23,7 +23,7 @@ h3 {
     font-style: italic;
     color: var(--black);  
 }
-div {
+.landing-container {
     margin-top: 100px;
     width: 400px;
     margin: auto;
