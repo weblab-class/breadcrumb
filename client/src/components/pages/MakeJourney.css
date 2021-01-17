@@ -4,3 +4,11 @@ body {
 div {
     width: 100vw;
 }
+
+.mapboxgl-popup{
+    width: 400px;
+}
+
+.popupmarker {
+    width: 100px;
+}

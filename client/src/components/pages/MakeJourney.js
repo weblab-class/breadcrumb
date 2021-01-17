@@ -6,7 +6,7 @@ import {Component, useState} from 'react';
 import {render} from 'react-dom';
 import MapGL, { Marker, Popup } from 'react-map-gl';
 
-const MAPBOX_TOKEN = 'pk.eyJ1IjoidHJ1ZHlwYWludGVyIiwiYSI6ImNranl5aG5veTAyYzcyb3BrYXY4ZXRudmsifQ.LfDsBUsS5yryoXBqEYbE7Q';
+const MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX_TOKEN;
 
 class MakeMapGL extends Component {
   constructor(props) {
@@ -15,10 +15,11 @@ class MakeMapGL extends Component {
       viewport: {
         latitude: 37.8,
         longitude: -122.4,
-        zoom: 4,
+        zoom: 8,
         bearing: 0,
         pitch: 0
-      }
+      },
+      showPopup: true
     };
   }
 
@@ -27,6 +28,7 @@ class MakeMapGL extends Component {
   }
 
   render() {
+    const {showPopup} = this.state;
 
     return (
       <MapGL
@@ -37,7 +39,16 @@ class MakeMapGL extends Component {
         onViewportChange={viewport => this.setState({viewport})}
         mapboxApiAccessToken={MAPBOX_TOKEN}
       >
-         
+        {showPopup && <Popup
+          latitude={37.8}
+          longitude={-122.4}
+          closeButton={true}
+          closeOnClick={false}
+          onClose={() => this.setState({showPopup: false})}
+          anchor="top" 
+          >
+          <div class="popupmarker">You are here</div>
+        </Popup>} 
       </MapGL>
     );
   }
