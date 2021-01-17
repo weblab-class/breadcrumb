@@ -8,9 +8,18 @@ body {
     width: 400px;
 }
 
+button {
+    border: none;
+    background-color: transparent;
+}
+
+button:focus{
+    outline: none;
+}
+
 .marker {
     width: 300px;
-    background-color: red;
+    transform: translate(-50%, -50%);
 }
 
 img {
@@ -24,4 +33,5 @@ img {
 .popup-title {
     font-family: var(--titlefont);
     font-size: var(--m);
+    padding-top: 10px;
 }

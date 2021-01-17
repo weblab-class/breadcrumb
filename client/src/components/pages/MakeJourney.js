@@ -39,6 +39,11 @@ class MakeMapGL extends Component {
         pitch: 0
       },
       selectedCrumb: null,
+
+      addNewEntry: null,
+      newEntryLat: null,
+      newEntryLon: null,
+
       crumbsList: TEST_CRUMBS,
     };
   }
@@ -54,12 +59,16 @@ class MakeMapGL extends Component {
         width: `${6 * this.state.viewport.zoom}px`,
     }
 
-    const zoomAdjustedOffsetLeft = `${3 * this.state.viewport.zoom}`;
-
     const showAddMarkerPopup = (event) => {
         event.preventDefault();
-        const [ longitude, latitude ] = event.lngLat;
-        console.log(longitude, latitude)
+
+        this.setState({
+            addNewEntry: true,
+            newEntryLat: event.lngLat[1],
+            newEntryLon: event.lngLat[0],
+        });
+        console.log(this.state);
+
     };
 
     return (
@@ -111,6 +120,21 @@ class MakeMapGL extends Component {
                     {this.state.selectedCrumb.description}
                 </div>
             </Popup>
+        ) : null
+        }
+
+        {this.state.addNewEntry ? (
+            <Popup
+            latitude={this.state.newEntryLat}
+            longitude={this.state.newEntryLon}
+            onClose={() => {
+                this.setState({
+                    addNewEntry: null,
+                });}}>
+            <div >
+                Add new crumb
+            </div>
+        </Popup>
         ) : null
         }
 
