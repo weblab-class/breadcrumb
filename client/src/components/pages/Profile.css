@@ -1,0 +1,18 @@
+.infoContainer {
+    text-align: center;
+}
+
+
+.profileName {
+    font-family: 'DM Serif Display', serif;
+    font-size: 5vw;
+    font-weight: 5;
+    color: black;
+}
+
+.about {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 3vw;
+    font-weight: 5;
+    color: black;
+}

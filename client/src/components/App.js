@@ -62,7 +62,7 @@ class App extends Component {
             handleLogout={this.handleLogout}
             userId={this.state.userId}
           />
-           <Profile path="/profile/:userId" />
+           <Profile path="/profile/:userId" handleLogout={this.handleLogout}/>
            <MakeJourney path="/makejourney" userId={this.state.userId}/>
           <NotFound default />
           
