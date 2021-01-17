@@ -1,6 +1,27 @@
 body {
-    margin: 0;
+    margin: default;
+    padding: default;
+    font-family: var(--bodyfont);;
 }
-div {
-    width: 100vw;
+
+.mapboxgl-popup{
+    width: 400px;
+}
+
+.marker {
+    width: 300px;
+    background-color: red;
+}
+
+img {
+    width: 100%;
+}
+
+.crumb-popup {
+    width: 50px;
+}
+
+.popup-title {
+    font-family: var(--titlefont);
+    font-size: var(--m);
 }

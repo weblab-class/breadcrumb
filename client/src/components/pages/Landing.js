@@ -23,12 +23,12 @@ class Landing extends Component {
     
     return (
       <>
-        <div>
+        <div className="landing-container">
         <h1>🍞</h1>
         <h2>Breadcrumb...</h2>
         <h3>Scatter your breadcrumbs on your next journey.</h3>
         {this.props.userId ? 
-          ( <div>
+          ( <div >
           <GoogleLogout
             clientId={GOOGLE_CLIENT_ID}
             buttonText="Logout"
