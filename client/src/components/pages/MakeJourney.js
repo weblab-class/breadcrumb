@@ -5,6 +5,9 @@ import * as React from 'react';
 import {Component, useState} from 'react';
 import {render} from 'react-dom';
 import MapGL, { Marker, Popup } from 'react-map-gl';
+import CrumbEntryForm from '../modules/CrumbEntryForm';
+import { get, post } from "../../utilities";
+
 
 const MAPBOX_TOKEN = "pk.eyJ1IjoidHJ1ZHlwYWludGVyIiwiYSI6ImNranl5aG5veTAyYzcyb3BrYXY4ZXRudmsifQ.LfDsBUsS5yryoXBqEYbE7Q";
 
@@ -50,6 +53,12 @@ class MakeMapGL extends Component {
 
   componentDidMount() {
       document.title = "Make A Journey";
+
+      get("/api/journeycrumbs").then((crumbObjs) => {
+        crumbObjs.map((crumb) => {
+          this.setState({ crumbsList: this.state.crumbsList.concat([crumb]) });
+        });
+      });
   }
 
   render() {
@@ -68,10 +77,27 @@ class MakeMapGL extends Component {
             newEntryLon: event.lngLat[0],
         });
         console.log(this.state);
+        console.log(this.props);
 
     };
 
+    const finishButtonClicked = () => {
+        console.log("Finish button clicked");
+        const body = {
+            crumbs: this.state.crumbsList,
+        }
+        console.log(body);
+        post("/api/journeyupdate", body).then((update) => {
+            // display this comment on the screen
+            console.log(update);
+        });
+    }
+
     return (
+    // <div clasName="make-journey-border-outer">
+    // <div clasName="make-journey-border-inner">
+    <div>
+
       <MapGL
         {...this.state.viewport}
         width="100vw"
@@ -79,8 +105,9 @@ class MakeMapGL extends Component {
         mapStyle="mapbox://styles/mapbox/light-v9"
         onViewportChange={viewport => this.setState({viewport})}
         mapboxApiAccessToken={MAPBOX_TOKEN}
-        onDblClick={showAddMarkerPopup}
+        onDblClick={showAddMarkerPopup}  
       >
+            {/* 1️⃣ LOAD/GENERATE CRUMBS */}
         {this.state.crumbsList.map(crumb => (
             <Marker
                 key={crumb.title}
@@ -101,20 +128,18 @@ class MakeMapGL extends Component {
                         
                     }}>
 
-                    <img src="crumb_icon.png"></img>
+                    <img src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/apple/271/bread_1f35e.png"></img>
                 </button>
             </Marker>
             
         ))}
 
+            {/* 2️⃣ CHECK FOR CRUMB CLICKED */}
         {this.state.selectedCrumb ? (
             <Popup
                 latitude={this.state.selectedCrumb.latitude}
                 longitude={this.state.selectedCrumb.longitude}
-                onClose={() => {
-                    this.setState({
-                        selectedCrumb: null,
-                    });}}>
+                onClose={() => {this.setState({selectedCrumb: null});}}>
                 <div >
                     <h1 className="popup-title">{this.state.selectedCrumb.title}</h1>
                     {this.state.selectedCrumb.description}
@@ -123,22 +148,41 @@ class MakeMapGL extends Component {
         ) : null
         }
 
+            {/* 3️⃣ CHECK FOR DOUBLE CLICK + NEW CRUMB ENTRY FORM */}
         {this.state.addNewEntry ? (
             <Popup
             latitude={this.state.newEntryLat}
             longitude={this.state.newEntryLon}
-            onClose={() => {
-                this.setState({
-                    addNewEntry: null,
-                });}}>
+            closeOnClick={false}
+            onClose={() => {this.setState({addNewEntry: null,});}}>
             <div >
-                Add new crumb
+                <CrumbEntryForm 
+                latitude={this.state.newEntryLat}
+                longitude={this.state.newEntryLon}
+                journey_id={this.props.journeyId}
+                user_id={this.props.userId}
+                current_crumbs = {this.state.crumbsList}
+                
+                updateCrumbList={(crumb) => {this.setState({
+                    crumbsList: this.state.crumbsList.concat(crumb),
+                    addNewEntry: null
+                })}}
+                />
             </div>
         </Popup>
         ) : null
         }
 
       </MapGL>
+
+      {/* <div className="header">
+        Double click to drop crumbs... */}
+        <button className="finish-button" onClick={finishButtonClicked}>
+            Finish
+        </button>
+    {/* </div> */}
+
+    </div>
     );
   }
 }

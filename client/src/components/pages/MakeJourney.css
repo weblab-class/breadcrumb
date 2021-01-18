@@ -1,7 +1,25 @@
 body {
     margin: default;
     padding: default;
-    font-family: var(--bodyfont);;
+    font-family: var(--bodyfont);
+}
+.header {
+    background-color: var(--cream);
+
+    /* DROP SHADOW
+    -webkit-box-shadow: 0px 10px 22px 0px var(--brown);
+    -moz-box-shadow: 0px 10px 22px 0px var(--brown);
+    box-shadow: 0px 10px 22px 0px var(--brown); */
+
+    height: 100px;
+    width: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+
+    font-family: var(--titlefont);
+    font-size: var(--l);
+    padding: 20px;
 }
 
 .mapboxgl-popup{
@@ -15,6 +33,28 @@ button {
 
 button:focus{
     outline: none;
+}
+
+button:hover{
+    cursor: pointer;
+}
+
+.marker:hover{
+    cursor: pointer; 
+}
+
+.finish-button {
+    width: 100px;
+    height: 60px;
+    background-color: var(--brown);
+    position: absolute;
+    top: 80px;
+    right: 20px;
+    border-radius: 100px;
+
+    font-family: var(--bodyfont);
+    font-size: var(--m);
+    color: var(--cream);
 }
 
 .marker {
