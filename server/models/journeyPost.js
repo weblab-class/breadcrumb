@@ -7,7 +7,7 @@ const journeyPostSchema = new Schema({
   journey_id: String,
   thumbnail: String,
   crumbs: Array,
-  date: Date,
+  dateTime: String,
 });
 
 const JourneyPost = mongoose.model("JourneyPost", journeyPostSchema);
