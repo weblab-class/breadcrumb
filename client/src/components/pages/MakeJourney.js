@@ -7,6 +7,7 @@ import {render} from 'react-dom';
 import MapGL, { Marker, Popup } from 'react-map-gl';
 import CrumbEntryForm from '../modules/CrumbEntryForm';
 import { get, post } from "../../utilities";
+import { navigate } from "@reach/router";
 
 
 const MAPBOX_TOKEN = "pk.eyJ1IjoidHJ1ZHlwYWludGVyIiwiYSI6ImNranl5aG5veTAyYzcyb3BrYXY4ZXRudmsifQ.LfDsBUsS5yryoXBqEYbE7Q";
@@ -47,7 +48,8 @@ class MakeMapGL extends Component {
       newEntryLat: null,
       newEntryLon: null,
 
-      crumbsList: TEST_CRUMBS,
+      crumbsList: [],
+      crumbIdList: [],
     };
   }
 
@@ -56,9 +58,12 @@ class MakeMapGL extends Component {
 
       get("/api/journeycrumbs").then((crumbObjs) => {
         crumbObjs.map((crumb) => {
-          this.setState({ crumbsList: this.state.crumbsList.concat([crumb]) });
+          this.setState({ 
+              crumbsList: this.state.crumbsList.concat(crumb),
+              crumbIdList: this.state.crumbIdList.concat(crumb.crumb_id)
+             });
         });
-      });
+      });     
   }
 
   render() {
@@ -84,13 +89,17 @@ class MakeMapGL extends Component {
     const finishButtonClicked = () => {
         console.log("Finish button clicked");
         const body = {
-            crumbs: this.state.crumbsList,
+            journey_id: this.props.journeyId,
+            crumbs: this.state.crumbIdList,
         }
         console.log(body);
         post("/api/journeyupdate", body).then((update) => {
             // display this comment on the screen
             console.log(update);
         });
+
+        const profilePath = "/profile/" + this.props.userId;
+        navigate(profilePath);
     }
 
     return (
@@ -116,17 +125,9 @@ class MakeMapGL extends Component {
             >
                 <button className="marker" 
                     style={zoomAdjustedSize}
-
                     onClick={event => {
                         event.preventDefault();
-                        console.log("CLICKED CRUMB");
-                        console.log(crumb);
-                        this.setState({
-                            selectedCrumb: crumb,
-                        })
-                        console.log(this.state.selectedCrumb);
-                        
-                    }}>
+                        this.setState({selectedCrumb: crumb,})}}>
 
                     <img src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/apple/271/bread_1f35e.png"></img>
                 </button>
@@ -163,8 +164,10 @@ class MakeMapGL extends Component {
                 user_id={this.props.userId}
                 current_crumbs = {this.state.crumbsList}
                 
-                updateCrumbList={(crumb) => {this.setState({
+                updateCrumbList={(crumb) => 
+                {this.setState({
                     crumbsList: this.state.crumbsList.concat(crumb),
+                    crumbIdList: this.state.crumbIdList.concat(crumb.crumb_id),
                     addNewEntry: null
                 })}}
                 />

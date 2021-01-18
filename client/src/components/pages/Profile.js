@@ -17,9 +17,6 @@ class Profile extends Component {
             bio: undefined,
             location: undefined,
         };
-
-        
-
     }
 
 
@@ -51,7 +48,10 @@ makeNewMap = () => {
 
     let journeyId = first + last + this.getCurrentTime();
     let mapPath = '/makejourney/' + journeyId;
-    post("/api/journey", { creator_id: this.state.user, journey_id: journeyId });
+    post("/api/journey", { creator_id: this.state.user, journey_id: journeyId, crumbs: [] }).then((comment) => {
+        // display this comment on the screen
+        console.log(comment);
+      });
     navigate(mapPath);
 }
 

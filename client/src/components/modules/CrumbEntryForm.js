@@ -10,13 +10,7 @@ const CrumbEntryForm = ({ updateCrumbList, latitude, longitude, journey_id, user
     const { register, handleSubmit } = useForm();
 
   const onSubmit = async (data) => {
-    // try {
-    //   setLoading(true);
-    //   data.latitude = location.latitude;
-    //   data.longitude = location.longitude;
-    //   await createCrumbEntry(data);
-    //   onClose();
-
+    
     data.creator_id = user_id;
     data.journey_id = journey_id;
     data.latitude = latitude;

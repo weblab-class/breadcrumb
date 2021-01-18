@@ -6,7 +6,7 @@ const journeyPostSchema = new Schema({
   creator_id: String,
   journey_id: String,
   thumbnail: String,
-  crumbs: Array,
+  crumbs: [String],
   date: Date,
 });
 
