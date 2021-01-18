@@ -5,14 +5,14 @@
 
 .profileName {
     font-family: 'DM Serif Display', serif;
-    font-size: 5vw;
+    font-size: 40px;
     font-weight: 5;
     color: black;
 }
 
 .about {
     font-family: 'DM Sans', sans-serif;
-    font-size: 3vw;
+    font-size: 3;
     font-weight: 5;
     color: black;
 }

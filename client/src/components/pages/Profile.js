@@ -67,9 +67,9 @@ render() {
         </div>
         <div className="infoContainer">
             <h1 className="profileName">{this.state.user.name}</h1>
-            <h2 className='about'>Insert location here</h2>
+            {/* <h2 className='about'>Insert location here</h2>
             <h2 className='about'>Insert bio here</h2>
-            <h2 className='about'>Number of journeys</h2>
+            <h2 className='about'>Number of journeys</h2> */}
         </div>
 
             {/* <input type="file" accept="image/*" onChange={this.handleImageUpload} multiple = "false" /> */}
