@@ -45,9 +45,9 @@ router.post("/journey", auth.ensureLoggedIn, (req, res) => {
   const newJourney = new JourneyPost({
     creator_id: req.user._id,
     journey_id: req.body.journey_id,
-    thumbnail: req.body.thumbnail,
-    crumbs: req.body.crumbs,
-    date: req.body.date,
+    // thumbnail: req.body.thumbnail,
+    // crumbs: req.body.crumbs, 
+    // date: req.body.date, 
   });
 
   newJourney.save().then((journey) => res.send(journey));

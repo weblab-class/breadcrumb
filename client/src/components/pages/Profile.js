@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { get } from "../../utilities";
+import { get, post } from "../../utilities";
 import { GoogleLogout } from "react-google-login";
 import { navigate, Router } from "@reach/router";
 import MakeJourney from "./MakeJourney";
@@ -49,8 +49,9 @@ makeNewMap = () => {
     let first = name[0];
     let last = name[1];
 
-    let mapPath = '/makejourney/' + first + last + this.getCurrentTime();
-    // post("/api/journey", { socketid: socket.id });
+    let journeyId = first + last + this.getCurrentTime();
+    let mapPath = '/makejourney/' + journeyId;
+    post("/api/journey", { creator_id: this.state.user, journey_id: journeyId });
     navigate(mapPath);
 }
 
