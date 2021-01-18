@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { navigate, Router } from "@reach/router";
+import { Link, navigate, Router } from "@reach/router";
 import NotFound from "./pages/NotFound.js";
 import Landing from "./pages/Landing.js";
 import Profile from "./pages/Profile.js";
