@@ -16,6 +16,7 @@ class Profile extends Component {
             user: undefined,
             bio: undefined,
             location: undefined,
+            journeys: undefined,
         };
     }
 
@@ -28,6 +29,9 @@ componentDidMount() {
   }
 
   getCurrentTime = () => {
+    const monthNames = ["January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"];
+
     let systemTime = new Date();
     let month = systemTime.getMonth();
     let day = systemTime.getDate();
@@ -37,8 +41,9 @@ componentDidMount() {
     let seconds = systemTime.getSeconds();
     let mili = systemTime.getMilliseconds();
     let fulltime = month.toString() + day.toString() + year.toString() + hours.toString() + minutes.toString() + seconds.toString() + mili.toString();
+    let formattedDateTime = monthNames[month] + ' ' + day.toString() + ', ' + year.toString() + ' ' + hours.toString() + ':' + minutes.toString() + ':' + seconds.toString() + ':' + mili.toString();
     
-    return fulltime;
+    return [fulltime,formattedDateTime];
 }
 
 makeNewMap = () => {
@@ -46,13 +51,35 @@ makeNewMap = () => {
     let first = name[0];
     let last = name[1];
 
-    let journeyId = first + last + this.getCurrentTime();
+    let dateTime = this.getCurrentTime()
+    let journeyId = first + last + dateTime[0];
+    let formattedDateTime = dateTime[1];
+    console.log(formattedDateTime);
     let mapPath = '/makejourney/' + journeyId;
+<<<<<<< HEAD
     post("/api/journey", { creator_id: this.state.user, journey_id: journeyId, crumbs: [] }).then((comment) => {
         // display this comment on the screen
         console.log(comment);
       });
+=======
+    post("/api/journey", { creator_id: this.state.user, journey_id: journeyId, dateTime: formattedDateTime});
+>>>>>>> 503e033f076ec9c192d3b91672c97d78988f450e
     navigate(mapPath);
+}
+
+formatDateTime = () => {
+    let linkedJourneys = []
+    get('/api/journeys').then((journeys) => {
+        this.setState({journeys: journeys});
+        for (let i = 0; i < this.state.journeys.length; i++) {
+            let linkName = this.state.journeys[i].dateTime;
+            let mapLink = '/makejourney/' + this.state.journeys[i].journey_id;
+            let linkString = `<Link to=${mapLink} > ${linkName} </Link>`;
+            linkedJourneys.push(linkString);
+            
+        }
+        return linkedJourneys;
+    });
 }
 
 
@@ -70,6 +97,9 @@ render() {
             {/* <h2 className='about'>Insert location here</h2>
             <h2 className='about'>Insert bio here</h2>
             <h2 className='about'>Number of journeys</h2> */}
+        </div>
+        <div>
+            {this.formatDateTime()}
         </div>
 
             {/* <input type="file" accept="image/*" onChange={this.handleImageUpload} multiple = "false" /> */}
