@@ -41,3 +41,9 @@
   .journeyButton {
       margin: var(--m);
   }
+
+  .linkDisplay {
+    text-align: center;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 3px;
+  }
