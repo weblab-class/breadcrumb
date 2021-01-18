@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { get, post } from "../../utilities";
 import { GoogleLogout } from "react-google-login";
-import { navigate, Router } from "@reach/router";
+import { Link, navigate, Router } from "@reach/router";
 import MakeJourney from "./MakeJourney";
 
 import "../../utilities.css";
@@ -28,6 +28,10 @@ componentDidMount() {
     document.title = "Profile Page";
 
     get(`/api/whoami`, { userid: this.props.userId }).then((user) => this.setState({ user: user }));
+
+    get('/api/journeys').then((journeys) => {
+        this.setState({journeys: journeys});
+    });
 
   }
 
@@ -65,17 +69,16 @@ makeNewMap = () => {
 
 formatDateTime = () => {
     let linkedJourneys = []
-    get('/api/journeys').then((journeys) => {
-        this.setState({journeys: journeys});
-        for (let i = 0; i < this.state.journeys.length; i++) {
-            let linkName = this.state.journeys[i].dateTime;
-            let mapLink = '/makejourney/' + this.state.journeys[i].journey_id;
-            let linkString = `<Link to=${mapLink} > ${linkName} </Link>`;
-            linkedJourneys.push(linkString);
+    console.log(this.state.journeys);
+    for (let i = 0; i < this.state.journeys.length; i++) {
+        let linkName = this.state.journeys[i].dateTime;
+        let mapLink = '/makejourney/' + this.state.journeys[i].journey_id;
+        let linkString = (<Link to={`${mapLink}`} > {linkName} </Link>);
+        linkedJourneys.push(linkString);
+        linkedJourneys.push((<br></br>));
             
-        }
-        return linkedJourneys;
-    });
+    }
+    return linkedJourneys;
 }
 
 
@@ -94,8 +97,9 @@ render() {
             <h2 className='about'>Insert bio here</h2>
             <h2 className='about'>Number of journeys</h2> */}
         </div>
-        <div>
-            {this.formatDateTime()}
+        <div className = "linkDisplay">
+            {this.state.journeys ?  
+            this.formatDateTime() : console.log('no journeys')}
         </div>
 
             {/* <input type="file" accept="image/*" onChange={this.handleImageUpload} multiple = "false" /> */}
