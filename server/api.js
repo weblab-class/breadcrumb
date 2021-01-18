@@ -46,7 +46,7 @@ router.post("/journey", auth.ensureLoggedIn, (req, res) => {
     creator_id: req.user._id,
     journey_id: req.body.journey_id,
     // thumbnail: req.body.thumbnail,
-    // crumbs: req.body.crumbs, 
+    crumbs: req.body.crumbs,  
     dateTime: req.body.dateTime, 
   });
 
@@ -55,19 +55,16 @@ router.post("/journey", auth.ensureLoggedIn, (req, res) => {
 
 router.get("/journeycrumbs", auth.ensureLoggedIn, (req, res) => {
   CrumbEntry.find({
-    journey_id: req.journey_id,
+    journey_id: req.body.journey_id,
   }).then((journey) => res.send(journey));
 });
 
 router.post("/journeyupdate", auth.ensureLoggedIn, (req, res) => {
-  console.log(req.body);
-  User.findById(req.journey_id).then((journey) => {
+  JourneyPost.findOne({'journey_id': req.body.journey_id}).then((journey) => {
     journey.crumbs = req.body.crumbs;
     journey.save();
     res.send(journey);
   });
-
-  newJourney.save().then((journey) => res.send(journey));
 });
 
 router.get("/journeys", (req, res) => {

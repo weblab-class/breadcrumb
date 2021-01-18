@@ -18,9 +18,6 @@ class Profile extends Component {
             location: undefined,
             journeys: undefined,
         };
-
-        
-
     }
 
 
@@ -63,7 +60,14 @@ makeNewMap = () => {
     let formattedDateTime = dateTime[1];
     console.log(formattedDateTime);
     let mapPath = '/makejourney/' + journeyId;
+<<<<<<< HEAD
+    post("/api/journey", { creator_id: this.state.user, journey_id: journeyId, crumbs: [] }).then((comment) => {
+        // display this comment on the screen
+        console.log(comment);
+      });
+=======
     post("/api/journey", { creator_id: this.state.user, journey_id: journeyId, dateTime: formattedDateTime});
+>>>>>>> 503e033f076ec9c192d3b91672c97d78988f450e
     navigate(mapPath);
 }
 
