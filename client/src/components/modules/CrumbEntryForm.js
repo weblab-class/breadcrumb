@@ -6,10 +6,8 @@ import { useForm } from 'react-hook-form';
 
 // import { createCrumbEntry } from './API';
 
-const CrumbEntryForm = ({ latitude, longitude, journey_id, user_id }) => {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-  const { register, handleSubmit } = useForm();
+const CrumbEntryForm = ({ updateCrumbList, latitude, longitude, journey_id, user_id, current_crumbs }) => {
+    const { register, handleSubmit } = useForm();
 
   const onSubmit = async (data) => {
     // try {
@@ -18,14 +16,18 @@ const CrumbEntryForm = ({ latitude, longitude, journey_id, user_id }) => {
     //   data.longitude = location.longitude;
     //   await createCrumbEntry(data);
     //   onClose();
-    // } catch (error) {
-    //   console.error(error);
-    //   setError(error.message);
-    //   setLoading(false);
-    // }
+
+    data.creator_id = user_id;
+    data.journey_id = journey_id;
+    data.latitude = latitude;
+    data.longitude = longitude;
+
+    console.log(current_crumbs.length);
+    data.crumb_id = journey_id + "_" + (current_crumbs.length + 1);
+
     console.log(data);
-    console.log(latitude);
-    console.log(longitude);
+
+    updateCrumbList(data);
   };
 
   return (
@@ -38,7 +40,7 @@ const CrumbEntryForm = ({ latitude, longitude, journey_id, user_id }) => {
       <textarea name="description" rows={3} ref={register}></textarea> <br></br>
       
       
-      <button className="create-button" disabled={loading}>{loading ? 'Loading...' : 'Create Entry'}</button>
+      <button className="create-button" >Create Entry</button>
     </form>
   );
 };

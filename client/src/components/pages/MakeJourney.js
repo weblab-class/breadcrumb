@@ -6,6 +6,8 @@ import {Component, useState} from 'react';
 import {render} from 'react-dom';
 import MapGL, { Marker, Popup } from 'react-map-gl';
 import CrumbEntryForm from '../modules/CrumbEntryForm';
+import { get, post } from "../../utilities";
+
 
 const MAPBOX_TOKEN = "pk.eyJ1IjoidHJ1ZHlwYWludGVyIiwiYSI6ImNranl5aG5veTAyYzcyb3BrYXY4ZXRudmsifQ.LfDsBUsS5yryoXBqEYbE7Q";
 
@@ -51,6 +53,12 @@ class MakeMapGL extends Component {
 
   componentDidMount() {
       document.title = "Make A Journey";
+
+      get("/api/journeycrumbs").then((crumbObjs) => {
+        crumbObjs.map((crumb) => {
+          this.setState({ crumbsList: this.state.crumbsList.concat([crumb]) });
+        });
+      });
   }
 
   render() {
@@ -69,11 +77,20 @@ class MakeMapGL extends Component {
             newEntryLon: event.lngLat[0],
         });
         console.log(this.state);
+        console.log(this.props);
 
     };
 
-    const finishButtonClicked = (event) => {
+    const finishButtonClicked = () => {
         console.log("Finish button clicked");
+        const body = {
+            crumbs: this.state.crumbsList,
+        }
+        console.log(body);
+        post("/api/journeyupdate", body).then((update) => {
+            // display this comment on the screen
+            console.log(update);
+        });
     }
 
     return (
@@ -111,7 +128,7 @@ class MakeMapGL extends Component {
                         
                     }}>
 
-                    <img src="crumb_icon.png"></img>
+                    <img src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/apple/271/bread_1f35e.png"></img>
                 </button>
             </Marker>
             
@@ -142,8 +159,15 @@ class MakeMapGL extends Component {
                 <CrumbEntryForm 
                 latitude={this.state.newEntryLat}
                 longitude={this.state.newEntryLon}
-                journey_id={this.props.journey_id}
-                user_id={this.props.user_id}/>
+                journey_id={this.props.journeyId}
+                user_id={this.props.userId}
+                current_crumbs = {this.state.crumbsList}
+                
+                updateCrumbList={(crumb) => {this.setState({
+                    crumbsList: this.state.crumbsList.concat(crumb),
+                    addNewEntry: null
+                })}}
+                />
             </div>
         </Popup>
         ) : null
