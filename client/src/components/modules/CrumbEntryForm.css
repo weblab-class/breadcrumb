@@ -1,0 +1,23 @@
+label {
+    color: var(--brown);
+}
+
+input {
+    width: 95%;
+    font-family: var(--bodyfont);
+}
+
+textarea {
+    width: 95%;
+    resize: none;
+    font-family: var(--bodyfont);
+}
+
+.create-button {
+    margin: auto;
+    padding: 10px;
+    border-radius: 60px;
+    font-family: var(--bodyfont);
+    color: var(--white);
+    background-color: var(--brown);
+}
