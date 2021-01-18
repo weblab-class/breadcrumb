@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import { get } from "../../utilities";
 import { GoogleLogout } from "react-google-login";
-import { navigate } from "@reach/router";
+import { navigate, Router } from "@reach/router";
+import MakeJourney from "./MakeJourney";
 
 import "../../utilities.css";
 import "./Profile.css";
 import { render } from "react-dom";
-import NavBar from "../modules/NavBar";
 
 
 class Profile extends Component {
@@ -30,6 +30,30 @@ componentDidMount() {
 
   }
 
+  getCurrentTime = () => {
+    let systemTime = new Date();
+    let month = systemTime.getMonth();
+    let day = systemTime.getDate();
+    let year = systemTime.getFullYear();
+    let hours = systemTime.getHours();
+    let minutes = systemTime.getMinutes();
+    let seconds = systemTime.getSeconds();
+    let mili = systemTime.getMilliseconds();
+    let fulltime = month.toString() + day.toString() + year.toString() + hours.toString() + minutes.toString() + seconds.toString() + mili.toString();
+    
+    return fulltime;
+}
+
+makeNewMap = () => {
+    let _,name = this.state.user.name.split(' ');
+    let first = name[0];
+    let last = name[1];
+
+    let mapPath = '/makejourney/' + first + last + this.getCurrentTime();
+    // post("/api/journey", { socketid: socket.id });
+    navigate(mapPath);
+}
+
 
 render() {
     if (!this.state.user) {
@@ -37,11 +61,9 @@ render() {
     }
     return (
         <>
-        <NavBar 
-            userId = {this.state.user} 
-            handleLogin={this.handleLogin}
-            handleLogout={this.props.handleLogout}
-        />
+        <div className = 'journeyButton'>
+                <button className="plus radius" onClick={this.makeNewMap}>  </button>
+        </div>
         <div className="infoContainer">
             <h1 className="profileName">{this.state.user.name}</h1>
             <h2 className='about'>Insert location here</h2>

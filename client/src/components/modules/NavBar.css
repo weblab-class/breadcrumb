@@ -1,37 +1,33 @@
 .NavBar-container {
-    padding: var(--xl) var(--m);
-    background-color: var(--cream);
+  padding: var(--s) var(--m);
+  background-color: var(--brown);
 }
 
-.buttonStyle {
-    justify-content: right;
+.NavBar-title {
+  font-family: var(--titletext);
+  color: var(--cream);
+  font-size: 20px;
 }
 
-.logoutButton {
-    width: 20vw;
-
+.NavBar-linkContainer {
+  margin-left: var(--l);
 }
 
-.plus {
-    width:50px;
-    height:50px;
-    display:inline-block;
-    
-    background:
-      linear-gradient(var(--brown),var(--brown)) top left,
-      linear-gradient(var(--brown),var(--brown)) top right,
-      linear-gradient(var(--brown),var(--brown)) bottom left,
-      linear-gradient(var(--brown),var(--brown)) bottom right;
-    background-size: calc(50% - 1px) calc(50% - 1px); /*thickness = 2px (2*1px) */
-    background-repeat:no-repeat;
-    border:10px solid var(--brown); /*length = 30px (50px - 2x10px) */
-    box-sizing:border-box;
-  }
-  
-  .radius {
-    border-radius:50%;
-  }
+.NavBar-link,
+.NavBar-link:visited {
+  color: var(--white);
+  opacity: 0.6;
+  text-decoration: none;
+}
 
-  .journeyButton {
-      margin: var(--m);
-  }
+.NavBar-link:hover {
+  opacity: 0.8;
+}
+
+.NavBar-link.NavBar-login {
+  opacity: 1;
+}
+
+.NavBar-link + .NavBar-link {
+  margin-left: var(--m);
+}
