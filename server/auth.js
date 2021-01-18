@@ -24,6 +24,8 @@ function getOrCreateUser(user) {
     const newUser = new User({
       name: user.name,
       googleid: user.sub,
+      bio: "This is a temporary bio",
+      location: "This is a temporary location",
     });
 
     return newUser.save();
