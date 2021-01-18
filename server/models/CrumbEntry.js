@@ -4,6 +4,8 @@ const { Schema } = mongoose;
 
 const crumbEntrySchema = new Schema({
   creator_id: String,
+  journey_id: String,
+  crumb_id: String,
   title: String,
   description: String,
   latitude: Number,

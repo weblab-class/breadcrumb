@@ -4,6 +4,7 @@ import NotFound from "./pages/NotFound.js";
 import Landing from "./pages/Landing.js";
 import Profile from "./pages/Profile.js";
 import MakeJourney from "./pages/MakeJourney";
+import NavBar from "./modules/NavBar";
 
 import "../utilities.css";
 
@@ -55,6 +56,11 @@ class App extends Component {
     console.log(this.state);
     return (
       <>
+        <NavBar
+          handleLogin={this.handleLogin}
+          handleLogout={this.handleLogout}
+          userId={this.state.userId}
+        />
         <Router>
           <Landing
             path="/"
@@ -63,7 +69,7 @@ class App extends Component {
             userId={this.state.userId}
           />
            <Profile path="/profile/:userId" handleLogout={this.handleLogout}/>
-           <MakeJourney path="/makejourney" userId={this.state.userId}/>
+           <MakeJourney path="/makejourney/:journeyId" userId={this.state.userId}/>
           <NotFound default />
           
 

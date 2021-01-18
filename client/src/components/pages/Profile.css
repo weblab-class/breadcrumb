@@ -5,14 +5,39 @@
 
 .profileName {
     font-family: 'DM Serif Display', serif;
-    font-size: 5vw;
+    font-size: 40px;
     font-weight: 5;
     color: black;
 }
 
 .about {
     font-family: 'DM Sans', sans-serif;
-    font-size: 3vw;
+    font-size: 3;
     font-weight: 5;
     color: black;
 }
+
+
+.plus {
+    width:50px;
+    height:50px;
+    display:inline-block;
+    
+    background:
+      linear-gradient(var(--brown),var(--brown)) top left,
+      linear-gradient(var(--brown),var(--brown)) top right,
+      linear-gradient(var(--brown),var(--brown)) bottom left,
+      linear-gradient(var(--brown),var(--brown)) bottom right;
+    background-size: calc(50% - 1px) calc(50% - 1px); /*thickness = 2px (2*1px) */
+    background-repeat:no-repeat;
+    border:10px solid var(--brown); /*length = 30px (50px - 2x10px) */
+    box-sizing:border-box;
+  }
+  
+  .radius {
+    border-radius:50%;
+  }
+
+  .journeyButton {
+      margin: var(--m);
+  }

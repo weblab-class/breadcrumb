@@ -44,8 +44,27 @@ router.post("/initsocket", (req, res) => {
 router.post("/journey", auth.ensureLoggedIn, (req, res) => {
   const newJourney = new JourneyPost({
     creator_id: req.user._id,
-    thumbnail: req.body.thumbnail,
-    crumbs: req.body.crumbs,
+    journey_id: req.body.journey_id,
+    // thumbnail: req.body.thumbnail,
+    // crumbs: req.body.crumbs, 
+    // date: req.body.date, 
+  });
+
+  newJourney.save().then((journey) => res.send(journey));
+});
+
+router.get("/journeycrumbs", auth.ensureLoggedIn, (req, res) => {
+  CrumbEntry.find({
+    journey_id: req.journey_id,
+  }).then((journey) => res.send(journey));
+});
+
+router.post("/journeyupdate", auth.ensureLoggedIn, (req, res) => {
+  console.log(req.body);
+  User.findById(req.journey_id).then((journey) => {
+    journey.crumbs = req.body.crumbs;
+    journey.save();
+    res.send(journey);
   });
 
   newJourney.save().then((journey) => res.send(journey));
@@ -60,6 +79,8 @@ router.get("/journeys", (req, res) => {
 router.post("/crumb", auth.ensureLoggedIn, (req, res) => {
   const newCrumb = new CrumbEntry({
     creator_id: req.user._id,
+    journey_id: req.body.journey_id,
+    crumb_id: req.body.crumb_id,
     title: req.body.title,
     description: req.body.description,
     latitude: req.body.latitude,
@@ -70,6 +91,7 @@ router.post("/crumb", auth.ensureLoggedIn, (req, res) => {
 });
 
 router.get("/user", (req, res) => {
+  console.log("getting user...");
   User.findById(req.query.userid).then((user) => {
     res.send(user);
   });
