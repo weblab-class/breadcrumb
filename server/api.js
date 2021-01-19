@@ -41,7 +41,9 @@ router.post("/initsocket", (req, res) => {
   res.send({});
 });
 
+// MAKE A NEW JOURNEY OBJECT
 router.post("/journey", auth.ensureLoggedIn, (req, res) => {
+  console.log("MAKING NEW JOURNEY");
   const newJourney = new JourneyPost({
     creator_id: req.user._id,
     journey_id: req.body.journey_id,
@@ -53,9 +55,8 @@ router.post("/journey", auth.ensureLoggedIn, (req, res) => {
   newJourney.save().then((journey) => res.send(journey));
 });
 
+// GET ALL THE CRUMBS FOR A CERTAIN JOURNEY
 router.get("/journeycrumbs", auth.ensureLoggedIn, (req, res) => {
-  console.log("GOT TO ENDPOINT");
-  console.log("CHECKING BODY", req);
   CrumbEntry.find({
     journey_id: req.query.journey_id,
   }).then((journey) => {
@@ -73,10 +74,17 @@ router.post("/journeyupdate", auth.ensureLoggedIn, (req, res) => {
   });
 });
 
+// GET ALL JOURNEYS FOR PROFILE PAGE
 router.get("/journeys", (req, res) => {
+  console.log("trying to get new journeys for profile page");
+  console.log(req.query.userid);
   JourneyPost.find({
     creator_id: req.query.userid,
-  }).then((journeys) => res.send(journeys));
+  }).then((journeys) => {
+    console.log("found these journeys");
+    console.log(journeys);
+    res.send(journeys);
+  });
 });
 
 router.post("/crumb", auth.ensureLoggedIn, (req, res) => {
