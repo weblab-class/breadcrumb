@@ -28,7 +28,8 @@ componentDidMount() {
 
     get('/api/journeys', { userid: this.props.userId }).then((journeys) => {
         this.setState({journeys: journeys});
-    });
+    }).then(() => {this.formatDateTime()}
+    );
 
   }
 
@@ -60,7 +61,7 @@ makeNewMap = () => {
     let formattedDateTime = dateTime[1];
     console.log(formattedDateTime);
     let mapPath = '/makejourney/' + journeyId;
-    post("/api/journey", { creator_id: this.state.user, journey_id: journeyId, crumbs: [] }).then((comment) => {
+    post("/api/journey", { creator_id: this.state.user, journey_id: journeyId, crumbs: [], dateTime: formattedDateTime }).then((comment) => {
         // display this comment on the screen
         console.log(comment);
       });
@@ -70,16 +71,17 @@ makeNewMap = () => {
 formatDateTime = () => {
     let linkedJourneys = []
     for (let i = 0; i < this.state.journeys.length; i++) {
-        let linkName = this.state.journeys[i].dateTime;
-        let mapLink = '/makejourney/' + this.state.journeys[i].journey_id;
-        let linkString = (<Link to={`${mapLink}`} > {linkName} </Link>);
-        linkedJourneys.push(linkString);
-        linkedJourneys.push((<br></br>));
-            
+        if (this.state.journeys[i].dateTime) {
+            let linkName = this.state.journeys[i].dateTime;
+            let mapLink = '/makejourney/' + this.state.journeys[i].journey_id;
+            let linkString = (<Link to={`${mapLink}`} > {linkName} </Link>);
+            linkedJourneys.push(linkString);
+            linkedJourneys.push((<br></br>));   
+        }
     }
+    console.log(linkedJourneys);
     return linkedJourneys;
 }
-
 
 render() {
     if (!this.state.user) {

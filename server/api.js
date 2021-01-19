@@ -57,11 +57,11 @@ router.post("/journey", auth.ensureLoggedIn, (req, res) => {
 
 // GET ALL THE CRUMBS FOR A CERTAIN JOURNEY
 router.get("/journeycrumbs", auth.ensureLoggedIn, (req, res) => {
+  console.log("THIS WAS THE CRUMB QUERY", req.query.journey_id);
   CrumbEntry.find({
     journey_id: req.query.journey_id,
   }).then((journey) => {
     console.log("FOUND THESE CRUMBS");
-    console.log(journey);
     res.send(journey)
   });
 });
@@ -76,20 +76,17 @@ router.post("/journeyupdate", auth.ensureLoggedIn, (req, res) => {
 
 // GET ALL JOURNEYS FOR PROFILE PAGE
 router.get("/journeys", (req, res) => {
-  console.log("trying to get new journeys for profile page");
-  console.log(req.query.userid);
   JourneyPost.find({
     creator_id: req.query.userid,
   }).then((journeys) => {
-    console.log("found these journeys");
-    console.log(journeys);
     res.send(journeys);
   });
 });
 
+// NEW CRUMB CREATION ON EVERY LOG FORM
 router.post("/crumb", auth.ensureLoggedIn, (req, res) => {
   const newCrumb = new CrumbEntry({
-    creator_id: req.user._id,
+    creator_id: req.body.creator_id,
     journey_id: req.body.journey_id,
     crumb_id: req.body.crumb_id,
     title: req.body.title,
@@ -118,7 +115,6 @@ router.post("/user/bio", (req, res) => {
 });
 
 router.post("/user/location", (req, res) => {
-  console.log(req.body);
   User.findById(req.user._id).then((user) => {
     user.location = req.body.content;
     user.save();

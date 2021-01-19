@@ -61,13 +61,14 @@ class MakeMapGL extends Component {
         }
         console.log(body);
       get("/api/journeycrumbs", body).then((crumbObjs) => {
-          console.log(crumbObjs);
+          console.log("THESE ARE THE CRUMB OBJS RETURNED", crumbObjs);
         crumbObjs.map((crumb) => {
           this.setState({ 
               crumbsList: this.state.crumbsList.concat(crumb),
               crumbIdList: this.state.crumbIdList.concat(crumb.crumb_id)
              });
         });
+        console.log("THIS IS THE STATE AFTER LOADING CRUMBS");
         console.log(this.state);
       });     
   }
@@ -171,11 +172,13 @@ class MakeMapGL extends Component {
                 current_crumbs = {this.state.crumbsList}
                 
                 updateCrumbList={(crumb) => 
-                {this.setState({
-                    crumbsList: this.state.crumbsList.concat(crumb),
-                    crumbIdList: this.state.crumbIdList.concat(crumb.crumb_id),
-                    addNewEntry: null
-                })}}
+                {
+                    this.setState({
+                        crumbsList: this.state.crumbsList.concat(crumb),
+                        crumbIdList: this.state.crumbIdList.concat(crumb.crumb_id),
+                        addNewEntry: null
+                    });
+                }}
                 />
             </div>
         </Popup>

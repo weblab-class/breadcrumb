@@ -3,6 +3,7 @@ import "./CrumbEntryForm.css";
 
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { get, post } from "../../utilities";
 
 // import { createCrumbEntry } from './API';
 
@@ -20,6 +21,11 @@ const CrumbEntryForm = ({ updateCrumbList, latitude, longitude, journey_id, user
     data.crumb_id = journey_id + "_" + (current_crumbs.length + 1);
 
     console.log(data);
+
+    post("/api/crumb", data).then((update) => {
+      // display this comment on the screen
+      console.log(update);
+    });
 
     updateCrumbList(data);
   };
