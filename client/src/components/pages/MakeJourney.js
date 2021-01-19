@@ -56,13 +56,19 @@ class MakeMapGL extends Component {
   componentDidMount() {
       document.title = "Make A Journey";
 
-      get("/api/journeycrumbs").then((crumbObjs) => {
+        const body = {
+            journey_id: this.props.journeyId
+        }
+        console.log(body);
+      get("/api/journeycrumbs", body).then((crumbObjs) => {
+          console.log(crumbObjs);
         crumbObjs.map((crumb) => {
           this.setState({ 
               crumbsList: this.state.crumbsList.concat(crumb),
               crumbIdList: this.state.crumbIdList.concat(crumb.crumb_id)
              });
         });
+        console.log(this.state);
       });     
   }
 

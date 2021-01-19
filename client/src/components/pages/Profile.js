@@ -69,7 +69,6 @@ makeNewMap = () => {
 
 formatDateTime = () => {
     let linkedJourneys = []
-    console.log(this.state.journeys);
     for (let i = 0; i < this.state.journeys.length; i++) {
         let linkName = this.state.journeys[i].dateTime;
         let mapLink = '/makejourney/' + this.state.journeys[i].journey_id;

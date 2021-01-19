@@ -54,9 +54,15 @@ router.post("/journey", auth.ensureLoggedIn, (req, res) => {
 });
 
 router.get("/journeycrumbs", auth.ensureLoggedIn, (req, res) => {
+  console.log("GOT TO ENDPOINT");
+  console.log("CHECKING BODY", req);
   CrumbEntry.find({
-    journey_id: req.body.journey_id,
-  }).then((journey) => res.send(journey));
+    journey_id: req.query.journey_id,
+  }).then((journey) => {
+    console.log("FOUND THESE CRUMBS");
+    console.log(journey);
+    res.send(journey)
+  });
 });
 
 router.post("/journeyupdate", auth.ensureLoggedIn, (req, res) => {
