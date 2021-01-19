@@ -75,7 +75,7 @@ router.post("/journeyupdate", auth.ensureLoggedIn, (req, res) => {
 
 router.get("/journeys", (req, res) => {
   JourneyPost.find({
-    creator_id: req.user._id,
+    creator_id: req.query.userid,
   }).then((journeys) => res.send(journeys));
 });
 
