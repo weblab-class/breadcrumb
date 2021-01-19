@@ -26,7 +26,7 @@ componentDidMount() {
 
     get(`/api/whoami`, { userid: this.props.userId }).then((user) => this.setState({ user: user }));
 
-    get('/api/journeys').then((journeys) => {
+    get('/api/journeys', { userid: this.props.userId }).then((journeys) => {
         this.setState({journeys: journeys});
     });
 
