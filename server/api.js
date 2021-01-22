@@ -23,6 +23,9 @@ const router = express.Router();
 //initialize socket
 const socketManager = require("./server-socket");
 
+// functions for image uploads
+const { uploadImagePromise, deleteImagePromise, downloadImagePromise } = require("./storageTalk");
+
 router.post("/login", auth.login);
 router.post("/logout", auth.logout);
 router.get("/whoami", (req, res) => {
@@ -66,6 +69,24 @@ router.get("/journeycrumbs", auth.ensureLoggedIn, (req, res) => {
   });
 });
 
+// GET IMAGE WHEN CRUMB CLICKED
+router.get("/crumbimage", auth.ensureLoggedIn, (req, res) => {
+  console.log("RECEIVED!!")
+  console.log(req.query.image_name);
+
+    downloadImagePromise(req.query.image_name)
+        .catch(err => "Err: could not find image")
+    .then(images => {
+      res.send({img: images});
+    }).catch(err => {
+      console.log("ERR getImages this shouldn't happen");
+      res.status(500).send({
+        message: "unknown error"
+      });
+    });
+});
+
+
 router.post("/journeyupdate", auth.ensureLoggedIn, (req, res) => {
   JourneyPost.findOne({'journey_id': req.body.journey_id}).then((journey) => {
     journey.crumbs = req.body.crumbs;
@@ -83,21 +104,34 @@ router.get("/journeys", (req, res) => {
   });
 });
 
-// NEW CRUMB CREATION ON EVERY LOG FORM
+// NEW CRUMB CREATION ON EVERY FORM SUBMISSION
 router.post("/crumb", auth.ensureLoggedIn, (req, res) => {
-  const newCrumb = new CrumbEntry({
-    creator_id: req.body.creator_id,
-    journey_id: req.body.journey_id,
-    crumb_id: req.body.crumb_id,
-    title: req.body.title,
-    description: req.body.description,
-    latitude: req.body.latitude,
-    longitude: req.body.longitude,
+  
+
+  if (typeof (req.body.image) !== 'string') {
+    throw new Error("Can only handle images encoded as strings. Got type: "
+      + typeof (req.body.image));
+  }
+  
+  uploadImagePromise(req.body.image).then(imageName => {
+    
+    const newCrumb = new CrumbEntry({
+      creator_id: req.body.creator_id,
+      journey_id: req.body.journey_id,
+      crumb_id: req.body.crumb_id,
+      title: req.body.title,
+      description: req.body.description,
+      latitude: req.body.latitude,
+      longitude: req.body.longitude,
+      image_name: imageName,
+    });
+
+    newCrumb.save().then((crumb) => res.send(crumb));
   });
 
-  newCrumb.save().then((crumb) => res.send(crumb));
 });
 
+// PROFILE PAGE ROUTES
 router.get("/user", (req, res) => {
   console.log("getting user...");
   User.findById(req.query.userid).then((user) => {

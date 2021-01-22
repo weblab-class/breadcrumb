@@ -10,7 +10,7 @@ const crumbEntrySchema = new Schema({
   description: String,
   latitude: Number,
   longitude: Number,
-  //TODO add photo support
+  image_name: String,
 });
 
 const CrumbEntry = mongoose.model("CrumbEntry", crumbEntrySchema);

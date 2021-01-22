@@ -43,6 +43,7 @@ class MakeMapGL extends Component {
         pitch: 0
       },
       selectedCrumb: null,
+      selectedCrumbImage: null,
 
       addNewEntry: null,
       newEntryLat: null,
@@ -61,15 +62,14 @@ class MakeMapGL extends Component {
         }
         console.log(body);
       get("/api/journeycrumbs", body).then((crumbObjs) => {
-          console.log("THESE ARE THE CRUMB OBJS RETURNED", crumbObjs);
+        console.log("THESE ARE THE CRUMB OBJS RETURNED", crumbObjs);
         crumbObjs.map((crumb) => {
           this.setState({ 
               crumbsList: this.state.crumbsList.concat(crumb),
               crumbIdList: this.state.crumbIdList.concat(crumb.crumb_id)
              });
         });
-        console.log("THIS IS THE STATE AFTER LOADING CRUMBS");
-        console.log(this.state);
+
       });     
   }
 
@@ -134,7 +134,23 @@ class MakeMapGL extends Component {
                     style={zoomAdjustedSize}
                     onClick={event => {
                         event.preventDefault();
-                        this.setState({selectedCrumb: crumb,})}}>
+                        this.setState({
+                            selectedCrumb: crumb,
+                            selectedCrumbImage: crumb.image_name,
+                        })
+                        console.log(crumb.image_name);
+                        get("/api/crumbimage", {image_name: crumb.image_name})
+                        .then(image => {
+                            console.log("received image");
+                            console.log(image);
+
+                            if (image.img === "Err: could not find image"){
+                                this.setState({ selectedCrumbImage: null });
+                            } else {
+                                this.setState({ selectedCrumbImage: image.img });
+                            }
+                        });
+                    }}>
 
                     <img src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/apple/271/bread_1f35e.png"></img>
                 </button>
@@ -147,10 +163,17 @@ class MakeMapGL extends Component {
             <Popup
                 latitude={this.state.selectedCrumb.latitude}
                 longitude={this.state.selectedCrumb.longitude}
-                onClose={() => {this.setState({selectedCrumb: null});}}>
+                onClose={() => {this.setState({
+                    selectedCrumb: null,
+                    selectedCrumbImage: null,
+                });}}>
                 <div >
                     <h1 className="popup-title">{this.state.selectedCrumb.title}</h1>
                     {this.state.selectedCrumb.description}
+
+                    {this.state.selectedCrumbImage ? (
+                    <img className="popup-image" src={this.state.selectedCrumbImage}></img>
+                    ): null}
                 </div>
             </Popup>
         ) : null
