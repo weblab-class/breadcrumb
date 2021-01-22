@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link, navigate, Router } from "@reach/router";
+import { Link, navigate, Router, Location} from "@reach/router";
 import NotFound from "./pages/NotFound.js";
 import Landing from "./pages/Landing.js";
 import Profile from "./pages/Profile.js";
@@ -56,11 +56,16 @@ class App extends Component {
     console.log(this.state);
     return (
       <>
-        <NavBar
-          handleLogin={this.handleLogin}
-          handleLogout={this.handleLogout}
-          userId={this.state.userId}
-        />
+      <Location>
+          {locationProps => (
+            <NavBar
+              handleLogin={this.handleLogin}
+              handleLogout={this.handleLogout}
+              userId={this.state.userId}
+              location={locationProps.location}
+            />
+          )}
+        </Location>
         <Router>
           <Landing
             path="/"
@@ -68,11 +73,9 @@ class App extends Component {
             handleLogout={this.handleLogout}
             userId={this.state.userId}
           />
-           <Profile path="/profile/:userId" handleLogout={this.handleLogout}/>
+           <Profile path="/profile/:userId" />
            <MakeJourney path="/makejourney/:journeyId" userId={this.state.userId}/>
           <NotFound default />
-          
-
         </Router>  
       </>
     );
