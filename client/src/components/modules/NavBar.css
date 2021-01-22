@@ -13,11 +13,15 @@
   margin-left: var(--l);
 }
 
+
 .NavBar-link,
 .NavBar-link:visited {
-  color: var(--white);
   opacity: 0.6;
   text-decoration: none;
+
+  font-family: var(--titletext);
+  color: var(--cream);
+  font-size: 20px;
 }
 
 .NavBar-link:hover {
@@ -26,8 +30,13 @@
 
 .NavBar-link.NavBar-login {
   opacity: 1;
+  position: relative;
 }
 
 .NavBar-link + .NavBar-link {
   margin-left: var(--m);
+}
+
+.google-button {
+  float: right;
 }
