@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "@reach/router";
+import { Link, navigate } from "@reach/router";
 import GoogleLogin, { GoogleLogout } from "react-google-login";
 
 import "./NavBar.css";
@@ -18,21 +18,27 @@ class NavBar extends Component {
   render() {
     return (
       <nav className="NavBar-container">
-        <div className="NavBar-title u-inlineBlock">Breadcrumb</div>
-        <div className="NavBar-linkContainer u-inlineBlock">
-          <Link to="/" className="NavBar-link">
+        <div className="u-inlineBlock">
+          <Link to={"/"} className="NavBar-link">
             Home
           </Link>
+        </div>
+        <div className="NavBar-linkContainer u-inlineBlock">
           {this.props.userId && (
             <Link to={`/profile/${this.props.userId}`} className="NavBar-link">
               Profile
             </Link>
           )}
+          </div>
+          <div className = "google-button ">
+          
           {this.props.userId ? (
             <GoogleLogout
               clientId={GOOGLE_CLIENT_ID}
               buttonText="Logout"
-              onLogoutSuccess={this.props.handleLogout}
+              onLogoutSuccess={() => {this.props.handleLogout();
+                navigate('/',{ replace: true })}
+              }
               onFailure={(err) => console.log(err)}
               className="NavBar-link NavBar-login"
             />
