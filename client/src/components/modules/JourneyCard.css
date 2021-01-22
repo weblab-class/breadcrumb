@@ -1,0 +1,20 @@
+.Card-container {
+  border: var(--brown) 1px solid;
+  border-radius: var(--xs);
+  margin-top: var(--m);
+}
+
+.Card-story {
+  padding: var(--m) var(--l);
+  border: 1px;
+}
+
+.Card-storyUser {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.Card-storyContent {
+  font-size: 20px;
+  margin: var(--s) 0 0;
+}
