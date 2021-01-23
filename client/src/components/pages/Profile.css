@@ -66,3 +66,16 @@
   flex-grow: 0;
   margin: 0.5em;
 }
+
+h3.warning {
+  margin: 50px;
+}
+
+.loading {
+  text-align: center;
+  vertical-align: middle;
+  line-height: 600px;
+  font-size: var(--xl);
+  font-style: italic;
+  font-weight: 800;
+}

@@ -26,7 +26,7 @@ class Profile extends Component {
 
     get(`/api/whoami`, { userid: this.props.userId }).then((user) => this.setState({ user: user }));
 
-    get("/api/journeys", { userid: this.props.userId }).then((journeys) => {
+    get("/api/journeys", { userid: this.props.userId }).then(async (journeys) => {
       this.setState({ journeys: journeys });
     });
   }
@@ -115,7 +115,7 @@ class Profile extends Component {
 
   render() {
     if (!this.state.user) {
-      return <div> Loading! </div>;
+      return <h3 className="warning"> </h3>;
     }
     return (
       <>
@@ -128,7 +128,7 @@ class Profile extends Component {
           <h1 className="profileName">{this.state.user.name}</h1>
         </div>
 
-        {this.state.journeys ? (
+        {this.state.journeys && this.state.journeys.length > 0 ? (
           <div className="flex-container">
             {this.state.journeys
               .slice(0)
@@ -142,14 +142,17 @@ class Profile extends Component {
                 />
               ))}
           </div>
+        ) : this.state.journeys === undefined ? (
+          <div className="empty">
+            <h3 className="warning">Loading!</h3>
+          </div>
         ) : (
           <div className="empty">
-            {console.log("NOTHING" + this.state.journeys)}
-            <h3>No journeys yet! Click the brown button to create your first one!</h3>
-            {console.log("NOTHING AGAIN " + this.state.journeys)}
+            <h3 className="warning">
+              No journeys yet! Click the brown button to create your first one!
+            </h3>
           </div>
         )}
-        {/* <input type="file" accept="image/*" onChange={this.handleImageUpload} multiple = "false" /> */}
       </>
     );
   }
