@@ -1,16 +1,15 @@
-import React, { Component } from "react";
-import { Link, navigate, Router, Location} from "@reach/router";
-import NotFound from "./pages/NotFound.js";
-import Landing from "./pages/Landing.js";
-import Profile from "./pages/Profile.js";
-import MakeJourney from "./pages/MakeJourney";
-import NavBar from "./modules/NavBar";
-
 import "../utilities.css";
 
-import { socket } from "../client-socket.js";
+import { Link, Location, Router, navigate } from "@reach/router";
+import React, { Component } from "react";
 import { get, post } from "../utilities";
 
+import Landing from "./pages/Landing.js";
+import MakeJourney from "./pages/MakeJourney";
+import NavBar from "./modules/NavBar";
+import NotFound from "./pages/NotFound.js";
+import Profile from "./pages/Profile.js";
+import { socket } from "../client-socket.js";
 
 /**
  * Define the "App" component as a class.
@@ -18,9 +17,9 @@ import { get, post } from "../utilities";
 class App extends Component {
   // makes props available in this component
   constructor(props) {
-  super(props);
-  this.state = {
-    userId: undefined,
+    super(props);
+    this.state = {
+      userId: undefined,
     };
   }
 
@@ -29,7 +28,6 @@ class App extends Component {
       if (user._id) {
         // they are registed in the database, and currently logged in.
         this.setState({ userId: user._id });
-        
       }
     });
   }
@@ -49,15 +47,15 @@ class App extends Component {
   };
 
   afterLogin = () => {
-    navigate('/profile/' + userId);
+    navigate("/profile");
   };
 
   render() {
     console.log(this.state);
     return (
       <>
-      <Location>
-          {locationProps => (
+        <Location>
+          {(locationProps) => (
             <NavBar
               handleLogin={this.handleLogin}
               handleLogout={this.handleLogout}
@@ -73,10 +71,10 @@ class App extends Component {
             handleLogout={this.handleLogout}
             userId={this.state.userId}
           />
-           <Profile path="/profile/:userId" />
-           <MakeJourney path="/makejourney/:journeyId" userId={this.state.userId}/>
+          <Profile path="/profile" userId={this.state.userId} />
+          <MakeJourney path="/journey/:journeyId" userId={this.state.userId} />
           <NotFound default />
-        </Router>  
+        </Router>
       </>
     );
   }
