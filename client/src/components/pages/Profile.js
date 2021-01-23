@@ -26,13 +26,9 @@ class Profile extends Component {
 
     get(`/api/whoami`, { userid: this.props.userId }).then((user) => this.setState({ user: user }));
 
-    get("/api/journeys", { userid: this.props.userId })
-      .then((journeys) => {
-        this.setState({ journeys: journeys });
-      })
-      .then(() => {
-        this.formatDateTime();
-      });
+    get("/api/journeys", { userid: this.props.userId }).then((journeys) => {
+      this.setState({ journeys: journeys });
+    });
   }
 
   getCurrentTime = () => {
@@ -95,7 +91,7 @@ class Profile extends Component {
     let journeyId = first + last + dateTime[0];
     let formattedDateTime = dateTime[1];
     console.log(formattedDateTime);
-    let mapPath = "/makejourney/" + journeyId;
+    let mapPath = "/journey/" + journeyId;
     post("/api/journey", {
       creator_id: this.state.user,
       journey_id: journeyId,
@@ -109,9 +105,9 @@ class Profile extends Component {
   };
 
   formatDateTime = (journey) => {
-    if (journey) {
+    if (journey && journey.dateTime) {
       let linkName = journey.dateTime;
-      let mapLink = "/makejourney/" + journey.journey_id;
+      let mapLink = "/journey/" + journey.journey_id;
       let linkString = <Link to={`${mapLink}`}> {linkName} </Link>;
       return linkString;
     }
@@ -130,14 +126,11 @@ class Profile extends Component {
         </div>
         <div className="infoContainer">
           <h1 className="profileName">{this.state.user.name}</h1>
-          {/* <h2 className='about'>Insert location here</h2>
-            <h2 className='about'>Insert bio here</h2>
-            <h2 className='about'>Number of journeys</h2> */}
         </div>
 
-        <div className="flex-container">
-          {this.state.journeys ? (
-            this.state.journeys
+        {this.state.journeys ? (
+          <div className="flex-container">
+            {this.state.journeys
               .slice(0)
               .reverse()
               .map((journey, index, array) => (
@@ -147,12 +140,15 @@ class Profile extends Component {
                   dateTime={journey.dateTime}
                   journeyIndex={array.length - index}
                 />
-              ))
-          ) : (
-            <h3>No journeys yet! Click the brown button to create your first journey!</h3>
-          )}
-        </div>
-
+              ))}
+          </div>
+        ) : (
+          <div className="empty">
+            {console.log("NOTHING" + this.state.journeys)}
+            <h3>No journeys yet! Click the brown button to create your first one!</h3>
+            {console.log("NOTHING AGAIN " + this.state.journeys)}
+          </div>
+        )}
         {/* <input type="file" accept="image/*" onChange={this.handleImageUpload} multiple = "false" /> */}
       </>
     );

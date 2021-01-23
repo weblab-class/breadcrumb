@@ -7,6 +7,7 @@
 .Card-story {
   padding: var(--m) var(--l);
   border: 1px;
+  justify-content: center;
 }
 
 .Card-storyUser {
@@ -15,6 +16,6 @@
 }
 
 .Card-storyContent {
-  font-size: 20px;
+  font-size: 15px;
   margin: var(--s) 0 0;
 }
