@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import { Link, navigate } from "@reach/router";
-import GoogleLogin, { GoogleLogout } from "react-google-login";
-
 import "./NavBar.css";
+
+import GoogleLogin, { GoogleLogout } from "react-google-login";
+import { Link, navigate } from "@reach/router";
+import React, { Component } from "react";
 
 // This identifies your application to Google's authentication service
 const GOOGLE_CLIENT_ID = "371897136705-uf976dbbp8kufvbgk2iqsak9ah4perbf.apps.googleusercontent.com";
@@ -16,8 +16,8 @@ class NavBar extends Component {
   }
 
   render() {
-    if (this.props.location.pathname.includes('makejourney')) {
-      return null
+    if (this.props.location.pathname.includes("journey")) {
+      return null;
     } else {
       return (
         <nav className="NavBar-container">
@@ -28,20 +28,21 @@ class NavBar extends Component {
           </div>
           <div className="NavBar-linkContainer u-inlineBlock">
             {this.props.userId && (
-              <Link to={`/profile/${this.props.userId}`} className="NavBar-link">
+              <Link to={`/profile`} className="NavBar-link">
                 Profile
               </Link>
             )}
-            {console.log('LOCATION' + JSON.stringify(this.props.location))}
-            </div>
-            <div className = "google-button ">
+            {console.log("LOCATION" + JSON.stringify(this.props.location))}
+          </div>
+          <div className="google-button ">
             {this.props.userId ? (
               <GoogleLogout
                 clientId={GOOGLE_CLIENT_ID}
                 buttonText="Logout"
-                onLogoutSuccess={() => {this.props.handleLogout();
-                  navigate('/',{ replace: true })}
-                }
+                onLogoutSuccess={() => {
+                  this.props.handleLogout();
+                  navigate("/", { replace: true });
+                }}
                 onFailure={(err) => console.log(err)}
                 className="NavBar-link NavBar-login"
               />
@@ -58,7 +59,7 @@ class NavBar extends Component {
         </nav>
       );
     }
-}
+  }
 }
 
 export default NavBar;
