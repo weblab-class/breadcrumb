@@ -23,14 +23,21 @@ class Profile extends Component {
 
   componentDidMount() {
     document.title = "Profile Page";
-
     get(`/api/whoami`, { userid: this.props.userId }).then((user) => this.setState({ user: user }));
-
-    get("/api/journeys", { userid: this.props.userId }).then(async (journeys) => {
-      this.setState({ journeys: journeys });
-    });
+    this.loadJourneys();
   }
 
+  componentDidUpdate(prevState) {
+    if (prevState.journeys !== this.state.journeys) {
+      this.loadJourneys();
+    }
+  }
+
+  loadJourneys = () => {
+    get("/api/journeys", { userid: this.props.userId }).then((journeys) => {
+      this.setState({ journeys: journeys });
+    });
+  };
   getCurrentTime = () => {
     const monthNames = [
       "January",
