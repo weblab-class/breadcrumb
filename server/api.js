@@ -117,14 +117,14 @@ router.get("/journeys", (req, res) => {
 // NEW CRUMB CREATION ON EVERY FORM SUBMISSION
 router.post("/crumb", auth.ensureLoggedIn, (req, res) => {
   
-
   if (typeof (req.body.image) !== 'string') {
     throw new Error("Can only handle images encoded as strings. Got type: "
       + typeof (req.body.image));
   }
   
-  uploadImagePromise(req.body.image).then(imageName => {
-    
+  // console.log("received this in body req" + req.body.image);
+  if (req.body.image == "none") {
+    // console.log("the body was none");
     const newCrumb = new CrumbEntry({
       creator_id: req.body.creator_id,
       journey_id: req.body.journey_id,
@@ -133,12 +133,26 @@ router.post("/crumb", auth.ensureLoggedIn, (req, res) => {
       description: req.body.description,
       latitude: req.body.latitude,
       longitude: req.body.longitude,
-      image_name: imageName,
+      image_name: null,
     });
-
     newCrumb.save().then((crumb) => res.send(crumb));
-  });
 
+  } else {
+    uploadImagePromise(req.body.image).then(imageName => {
+      const newCrumb = new CrumbEntry({
+        creator_id: req.body.creator_id,
+        journey_id: req.body.journey_id,
+        crumb_id: req.body.crumb_id,
+        title: req.body.title,
+        description: req.body.description,
+        latitude: req.body.latitude,
+        longitude: req.body.longitude,
+        image_name: imageName,
+      });
+      newCrumb.save().then((crumb) => res.send(crumb));
+    }); 
+  }
+  
 });
 
 // PROFILE PAGE ROUTES

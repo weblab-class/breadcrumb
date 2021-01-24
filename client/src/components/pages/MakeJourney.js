@@ -94,15 +94,6 @@ class MakeMapGL extends Component {
 
     const finishButtonClicked = () => {
       console.log("Finish button clicked");
-      const body = {
-        journey_id: this.props.journeyId,
-        crumbs: this.state.crumbIdList,
-      };
-      console.log(body);
-      post("/api/journeyupdate", body).then((update) => {
-        // display this comment on the screen
-        console.log(update);
-      });
 
       const profilePath = "/profile/" + this.props.userId;
       navigate(profilePath);
@@ -157,6 +148,7 @@ class MakeMapGL extends Component {
               latitude={this.state.selectedCrumb.latitude}
               longitude={this.state.selectedCrumb.longitude}
               onClose={() => {
+                  console.log(this.state.selectedCrumb);
                 this.setState({
                   selectedCrumb: null,
                   selectedCrumbImage: null,
@@ -192,6 +184,16 @@ class MakeMapGL extends Component {
                   user_id={this.props.userId}
                   current_crumbs={this.state.crumbsList}
                   updateCrumbList={(crumb) => {
+                    const body = {
+                        journey_id: this.props.journeyId,
+                        crumbs: this.state.crumbIdList,
+                      };
+                      console.log(body);
+                      post("/api/journeyupdate", body).then((update) => {
+                        // display this comment on the screen
+                        console.log(update);
+                      });
+
                     this.setState({
                       crumbsList: this.state.crumbsList.concat(crumb),
                       crumbIdList: this.state.crumbIdList.concat(crumb.crumb_id),
