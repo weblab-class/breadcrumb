@@ -104,7 +104,7 @@ class MakeMapGL extends Component {
         console.log(update);
       });
 
-      const profilePath = "/profile";
+      const profilePath = "/profile/" + this.props.userId;
       navigate(profilePath);
     };
 
@@ -206,6 +206,12 @@ class MakeMapGL extends Component {
 
         {/* <div className="header">
         Double click to drop crumbs... */}
+        <div className="header">
+            <div className="instruction-label">
+                Double click to drop crumbs.
+            </div> 
+        </div>
+
         <button className="finish-button" onClick={finishButtonClicked}>
           Finish
         </button>
