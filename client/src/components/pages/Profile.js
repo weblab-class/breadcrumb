@@ -19,6 +19,9 @@ class Profile extends Component {
       location: undefined,
       journeys: undefined,
     };
+
+    this.journeyNum = 0;
+
   }
 
   componentDidMount() {
@@ -27,6 +30,7 @@ class Profile extends Component {
     get(`/api/whoami`, { userid: this.props.userId }).then((user) => this.setState({ user: user }));
 
     get("/api/journeys", { userid: this.props.userId }).then(async (journeys) => {
+      this.journeyNum = await journeys.length;
       this.setState({ journeys: journeys });
     });
   }
@@ -106,6 +110,7 @@ class Profile extends Component {
 
   formatDateTime = (journey) => {
     if (journey && journey.dateTime) {
+      console.log('JOURNEU NUM  ' + this.journeyNum);
       let linkName = journey.dateTime;
       let mapLink = "/journey/" + journey.journey_id;
       let linkString = <Link to={`${mapLink}`}> {linkName} </Link>;
@@ -126,6 +131,7 @@ class Profile extends Component {
         </div>
         <div className="infoContainer">
           <h1 className="profileName">{this.state.user.name}</h1>
+          <h3 className='journeyNumber'>{this.journeyNum} journeys</h3>
         </div>
 
         {this.state.journeys && this.state.journeys.length > 0 ? (
@@ -149,7 +155,7 @@ class Profile extends Component {
         ) : (
           <div className="empty">
             <h3 className="warning">
-              No journeys yet! Click the brown button to create your first one!
+              No journeys yet! Click the plus button to create your first one!
             </h3>
           </div>
         )}
