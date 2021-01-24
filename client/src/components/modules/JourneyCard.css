@@ -1,7 +1,7 @@
 .Card-container {
   border: var(--brown) 1px solid;
   border-radius: var(--xs);
-  margin-top: var(--m);
+  margin-top: var(--m); 
 }
 
 .Card-story {
@@ -21,8 +21,8 @@
 }
 
 .minus {
-  width: 50px;
-  height: 50px;
+  width: 10px;
+  height: 22px;
   /* display: inline-block; */
   background: linear-gradient(var(--brown), var(--brown)) top left,
     linear-gradient(var(--brown), var(--brown)) top right,
@@ -32,10 +32,12 @@
     linear-gradient(var(--brown), var(--brown)) top center;
   background-size: calc(50% - 1px) calc(50% - 1px); /*thickness = 2px (2*1px) */
   background-repeat: no-repeat;
-  border: 10px solid var(--brown); /*length = 30px (50px - 2x10px) */
+  border: 5px solid var(--brown); /*length = 30px (50px - 2x10px) */
   box-sizing: border-box;
-  float: right;
+  /* float: top right; */
   margin-right: 30px;
+  margin-top: -45px;
+  margin-right: 0px;
 }
 
 .radius {
@@ -43,5 +45,5 @@
 }
 
 .deleteButton {
-  margin: var(--m);
+  margin: var(--xs);
 }
