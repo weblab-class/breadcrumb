@@ -15,26 +15,31 @@ class Profile extends Component {
     super(props);
     this.state = {
       user: undefined,
-      bio: undefined,
-      location: undefined,
       journeys: undefined,
+      delete: false,
     };
+
+    console.log("delete is" + this.state.delete);
+
+    this.journeyNum = 0;
   }
 
   componentDidMount() {
     document.title = "Profile Page";
+    console.log("mounting!");
     get(`/api/whoami`, { userid: this.props.userId }).then((user) => this.setState({ user: user }));
     this.loadJourneys();
   }
 
-  componentDidUpdate(prevState) {
-    if (prevState.journeys !== this.state.journeys) {
-      this.loadJourneys();
-    }
-  }
+  //   componentDidUpdate(prevState) {
+  //     if (prevState.journeys !== this.state.journeys) {
+  //       this.loadJourneys();
+  //     }
+  //   }
 
   loadJourneys = () => {
-    get("/api/journeys", { userid: this.props.userId }).then((journeys) => {
+    get("/api/journeys", { userid: this.props.userId }).then(async (journeys) => {
+      this.journeyNum = await journeys.length;
       this.setState({ journeys: journeys });
     });
   };
@@ -120,6 +125,10 @@ class Profile extends Component {
     }
   };
 
+  startDelete = () => {
+    this.setState({ delete: !this.state.delete });
+  };
+
   render() {
     if (!this.state.user) {
       return <h3 className="warning"> </h3>;
@@ -130,9 +139,21 @@ class Profile extends Component {
           <button className="plus radius" onClick={this.makeNewMap}>
             {" "}
           </button>
+          {/* <button className="minus radius" onClick={this.startDelete}>
+            {" "}
+          </button> */}
         </div>
         <div className="infoContainer">
           <h1 className="profileName">{this.state.user.name}</h1>
+          <h3 className="journeyNumber">{this.journeyNum} journeys</h3>
+          {this.state.delete && this.state.journeys ? (
+            <h3 className="deleteMessage">
+              Click the journey you would like to delete. Click the minus button again to stop
+              deleting.
+            </h3>
+          ) : (
+            console.log("done deleting")
+          )}
         </div>
 
         {this.state.journeys && this.state.journeys.length > 0 ? (
@@ -145,18 +166,19 @@ class Profile extends Component {
                   journeyId={journey.journey_id}
                   journeyLink={this.formatDateTime(journey).props.to}
                   dateTime={journey.dateTime}
+                  delete={this.state.delete}
                   journeyIndex={array.length - index}
                 />
               ))}
           </div>
         ) : this.state.journeys === undefined ? (
-          <div className="empty">
+          <div>
             <h3 className="warning">Loading!</h3>
           </div>
         ) : (
-          <div className="empty">
+          <div>
             <h3 className="warning">
-              No journeys yet! Click the brown button to create your first one!
+              No journeys yet! Click the plus button to create your first one!
             </h3>
           </div>
         )}

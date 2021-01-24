@@ -12,6 +12,15 @@
   padding: 0px;
 }
 
+.journeyNumber {
+  font-family: "DM Serif Display", serif;
+  font-size: 20px;
+  font-weight: 5;
+  color: black;
+  opacity: .7;
+  padding: 0px;
+}
+
 .about {
   font-family: "DM Sans", sans-serif;
   font-size: 3;
@@ -35,6 +44,23 @@
   margin-right: 30px;
 }
 
+.minus {
+  width: 50px;
+  height: 50px;
+  /* display: inline-block; */
+  background: linear-gradient(var(--brown), var(--brown)) top left,
+    linear-gradient(var(--brown), var(--brown)) top right,
+    linear-gradient(var(--brown), var(--brown)) bottom left,
+    linear-gradient(var(--brown), var(--brown)) bottom right,
+    linear-gradient(var(--brown), var(--brown)) bottom center,
+    linear-gradient(var(--brown), var(--brown)) top center;
+  background-size: calc(50% - 1px) calc(50% - 1px); /*thickness = 2px (2*1px) */
+  background-repeat: no-repeat;
+  border: 10px solid var(--brown); /*length = 30px (50px - 2x10px) */
+  box-sizing: border-box;
+  float: right;
+  margin-right: 30px;
+}
 .radius {
   border-radius: 50%;
 }
@@ -78,4 +104,8 @@ h3.warning {
   font-size: var(--xl);
   font-style: italic;
   font-weight: 800;
+}
+
+.deleteMessage {
+  font-size: 20px;
 }

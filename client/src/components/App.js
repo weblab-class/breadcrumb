@@ -47,7 +47,7 @@ class App extends Component {
   };
 
   afterLogin = () => {
-    navigate("/profile");
+    navigate("/profile/:userId");
   };
 
   render() {
@@ -71,7 +71,7 @@ class App extends Component {
             handleLogout={this.handleLogout}
             userId={this.state.userId}
           />
-          <Profile path="/profile" userId={this.state.userId} />
+          <Profile path="/profile/:userId" userId={this.state.userId} />
           <MakeJourney path="/journey/:journeyId" userId={this.state.userId} />
           <NotFound default />
         </Router>

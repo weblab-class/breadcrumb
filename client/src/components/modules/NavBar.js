@@ -16,7 +16,7 @@ class NavBar extends Component {
   }
 
   render() {
-    if (this.props.location.pathname.includes("journey")) {
+    if (this.props.location.pathname.includes("makejourney")) {
       return null;
     } else {
       return (
@@ -28,7 +28,7 @@ class NavBar extends Component {
           </div>
           <div className="NavBar-linkContainer u-inlineBlock">
             {this.props.userId && (
-              <Link to={`/profile`} className="NavBar-link">
+              <Link to={`/profile/${this.props.userId}`} className="NavBar-link">
                 Profile
               </Link>
             )}
