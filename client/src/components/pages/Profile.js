@@ -15,10 +15,11 @@ class Profile extends Component {
     super(props);
     this.state = {
       user: undefined,
-      bio: undefined,
-      location: undefined,
       journeys: undefined,
+      delete: false,
     };
+
+    console.log('delete is' + this.state.delete);
 
     this.journeyNum = 0;
 
@@ -110,13 +111,16 @@ class Profile extends Component {
 
   formatDateTime = (journey) => {
     if (journey && journey.dateTime) {
-      console.log('JOURNEU NUM  ' + this.journeyNum);
       let linkName = journey.dateTime;
       let mapLink = "/journey/" + journey.journey_id;
       let linkString = <Link to={`${mapLink}`}> {linkName} </Link>;
       return linkString;
     }
   };
+
+  startDelete = () => {
+    this.setState({delete: ! this.state.delete});
+  }
 
   render() {
     if (!this.state.user) {
@@ -128,11 +132,21 @@ class Profile extends Component {
           <button className="plus radius" onClick={this.makeNewMap}>
             {" "}
           </button>
+          {/* <button className="minus radius" onClick={this.startDelete}>
+            {" "}
+          </button> */}
         </div>
         <div className="infoContainer">
           <h1 className="profileName">{this.state.user.name}</h1>
           <h3 className='journeyNumber'>{this.journeyNum} journeys</h3>
+          {this.state.delete && this.state.journeys ? 
+          (
+            <h3 className = "deleteMessage">Click the journey you would like to delete. Click the minus button again to stop deleting.</h3>
+          ) : 
+          console.log('done deleting')
+          }
         </div>
+        
 
         {this.state.journeys && this.state.journeys.length > 0 ? (
           <div className="flex-container">
@@ -144,6 +158,7 @@ class Profile extends Component {
                   journeyId={journey.journey_id}
                   journeyLink={this.formatDateTime(journey).props.to}
                   dateTime={journey.dateTime}
+                  delete={this.state.delete}
                   journeyIndex={array.length - index}
                 />
               ))}

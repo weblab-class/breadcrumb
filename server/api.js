@@ -58,6 +58,16 @@ router.post("/journey", auth.ensureLoggedIn, (req, res) => {
   newJourney.save().then((journey) => res.send(journey));
 });
 
+// DELETE A JOURNEY OBJECT AND CRUMBS ASSOCIATED WITH IT
+router.post('/deletejourney', (req,res) => {
+  JourneyPost.deleteOne({journey_id: req.body.journey_id}).then((response) => {
+    console.log('FINAL JOURNEY RESPONSE' + response);
+  });
+  CrumbEntry.deleteMany({journey_id: req.body.journey_id}).then((response) => {
+    console.log('FINAL CRUMB RESPONSE' + response);
+  });
+})
+
 // GET ALL THE CRUMBS FOR A CERTAIN JOURNEY
 router.get("/journeycrumbs", auth.ensureLoggedIn, (req, res) => {
   console.log("THIS WAS THE CRUMB QUERY", req.query.journey_id);
