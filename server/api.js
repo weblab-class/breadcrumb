@@ -117,13 +117,13 @@ router.get("/journeys", (req, res) => {
 // NEW CRUMB CREATION ON EVERY FORM SUBMISSION
 router.post("/crumb", auth.ensureLoggedIn, (req, res) => {
   
-  if (typeof (req.body.image) !== 'string') {
+  if (typeof (req.body.image_name) !== 'string') {
     throw new Error("Can only handle images encoded as strings. Got type: "
-      + typeof (req.body.image));
+      + typeof (req.body.image_name));
   }
   
   // console.log("received this in body req" + req.body.image);
-  if (req.body.image == "none") {
+  if (req.body.image_name == "none") {
     // console.log("the body was none");
     const newCrumb = new CrumbEntry({
       creator_id: req.body.creator_id,
@@ -138,7 +138,7 @@ router.post("/crumb", auth.ensureLoggedIn, (req, res) => {
     newCrumb.save().then((crumb) => res.send(crumb));
 
   } else {
-    uploadImagePromise(req.body.image).then(imageName => {
+    uploadImagePromise(req.body.image_name).then(imageName => {
       const newCrumb = new CrumbEntry({
         creator_id: req.body.creator_id,
         journey_id: req.body.journey_id,
