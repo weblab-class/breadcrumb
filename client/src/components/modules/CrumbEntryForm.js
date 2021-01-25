@@ -31,7 +31,7 @@ const readImage = (blob) => {
 };
 
 const CrumbEntryForm = ({ updateCrumbList, latitude, longitude, journey_id, user_id, current_crumbs }) => {
-    const { register, handleSubmit } = useForm();
+  const { register, handleSubmit } = useForm();
 
   const onSubmit = async (data) => {
     
@@ -41,16 +41,27 @@ const CrumbEntryForm = ({ updateCrumbList, latitude, longitude, journey_id, user
     data.longitude = longitude;
     data.crumb_id = journey_id + "_" + (current_crumbs.length + 1);
 
-    readImage(fileInput.files[0]).then(image => {
-      data.image = image;
-      console.log(data);
+    if (typeof fileInput.files[0] == "undefined") {
+      data.image_name = "none";
+
       post("/api/crumb", data).then((update) => {
         // display this comment on the screen
         console.log(update);
       });
-
+      
       updateCrumbList(data);
-    });
+    } else {
+      readImage(fileInput.files[0]).then(image => {
+        data.image_name = image;
+        console.log(data);
+        post("/api/crumb", data).then((update) => {
+          // display this comment on the screen
+          console.log(update);
+        });
+
+        updateCrumbList(data);
+      });
+    }
   };
 
   return (
@@ -63,9 +74,9 @@ const CrumbEntryForm = ({ updateCrumbList, latitude, longitude, journey_id, user
       <textarea name="description" rows={3} ref={register}></textarea> <br></br>
       
       <label htmlFor="image">Image</label> <br></br>
-      <input id="fileInput" type="file" name="files[]" accept="image/*"/>
+      <input className="file-upload" id="fileInput" type="file" name="files[]" accept="image/*"/> <br></br>
 
-      <button className="create-button" >Create Entry</button>
+      <button className="create-button" >Create Entry</button> 
     </form>
   );
 };

@@ -21,3 +21,7 @@ textarea {
     color: var(--white);
     background-color: var(--brown);
 }
+
+.file-upload {
+    padding-bottom: 10px;
+}
