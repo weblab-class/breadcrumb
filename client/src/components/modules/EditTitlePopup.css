@@ -1,0 +1,7 @@
+.popup {
+  justify-content: center;
+}
+
+.popup:hover {
+  background-color: gray;
+}

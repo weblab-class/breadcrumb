@@ -2,6 +2,7 @@ import "./JourneyCard.css";
 
 import React, { Component } from "react";
 
+import JourneyMenu from "./JourneyMenu";
 import { Link } from "@reach/router";
 import { post } from "../../utilities";
 
@@ -21,23 +22,37 @@ class JourneyCard extends Component {
     console.log(this.props);
   }
 
-startDelete = () => {
-  post('/api/deletejourney', {journey_id: this.props.journeyId});
-  window. location.reload();
-}
+  startDelete = () => {
+    post("/api/deletejourney", { journey_id: this.props.journeyId });
+    window.location.reload();
+  };
 
   render() {
     return (
       <div className="Card-container">
-        <div className="deleteButton">
+        <div className="Card-menu">
+          <JourneyMenu journeyId={this.props.journeyId} />
+        </div>
+        <div className="Card-content">
+          {/* <div className="deleteButton">
           <button className="minus radius" onClick={this.startDelete}>
             {" "}
           </button>
-          </div>
-        <Link to={this.props.journeyLink} className="u-link u-bold">
-          {"My Journey #" + this.props.journeyIndex}
-        </Link>
-        <p className="Card-storyContent">{this.props.dateTime.split(" ").slice(0, 3).join(" ")}</p>
+        </div> */}
+          {!this.props.journeyTitle ? (
+            <Link to={this.props.journeyLink} className="u-link u-bold">
+              {"My Journey #" + this.props.journeyIndex}
+            </Link>
+          ) : (
+            <Link to={this.props.journeyLink} className="u-link u-bold">
+              {this.props.journeyTitle}
+            </Link>
+          )}
+
+          <p className="Card-storyContent">
+            {this.props.dateTime.split(" ").slice(0, 3).join(" ")}
+          </p>
+        </div>
       </div>
     );
   }

@@ -4,6 +4,9 @@
   margin-top: var(--m);
 }
 
+.Card-content {
+  padding: 45px 0px 45px 30px;
+}
 .Card-story {
   padding: var(--m) var(--l);
   border: 1px;
@@ -44,4 +47,12 @@
 
 .deleteButton {
   margin: var(--m);
+}
+
+.JourneyCard {
+  padding-top: 0px;
+}
+
+.Card-menu {
+  float: right;
 }

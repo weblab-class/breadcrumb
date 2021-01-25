@@ -168,6 +168,7 @@ class Profile extends Component {
                   dateTime={journey.dateTime}
                   delete={this.state.delete}
                   journeyIndex={array.length - index}
+                  journeyTitle={journey.journey_title}
                 />
               ))}
           </div>
