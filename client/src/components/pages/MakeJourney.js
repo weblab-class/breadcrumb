@@ -8,30 +8,12 @@ import MapGL, { Marker, Popup } from "react-map-gl";
 import { get, post } from "../../utilities";
 
 import CrumbEntryForm from "../modules/CrumbEntryForm";
+import SideBar from "../modules/SideBar";
 import { navigate } from "@reach/router";
 import { render } from "react-dom";
 
 const MAPBOX_TOKEN =
   "pk.eyJ1IjoidHJ1ZHlwYWludGVyIiwiYSI6ImNranl5aG5veTAyYzcyb3BrYXY4ZXRudmsifQ.LfDsBUsS5yryoXBqEYbE7Q";
-
-const TEST_CRUMBS = [
-  {
-    creator_id: "trudy",
-    title: "sfo",
-    description: "this is a test description",
-    latitude: 37.6213,
-    longitude: -122.379,
-    //TODO add photo support
-  },
-  {
-    creator_id: "trudy",
-    title: "second post",
-    description: "this is a second test description",
-    latitude: 37.5,
-    longitude: -122.2,
-    //TODO add photo support
-  },
-];
 
 class MakeMapGL extends Component {
   constructor(props) {
@@ -53,6 +35,7 @@ class MakeMapGL extends Component {
 
       crumbsList: [],
       crumbIdList: [],
+      sideBarReady: null,
     };
   }
 
@@ -69,9 +52,13 @@ class MakeMapGL extends Component {
         this.setState({
           crumbsList: this.state.crumbsList.concat(crumb),
           crumbIdList: this.state.crumbIdList.concat(crumb.crumb_id),
+          sideBarReady: true,
         });
       });
     });
+
+    console.log("INITIAL PROPS", this.props);
+    console.log("INITIAL STATE", this.state);
   }
 
   render() {
@@ -88,8 +75,6 @@ class MakeMapGL extends Component {
         newEntryLat: event.lngLat[1],
         newEntryLon: event.lngLat[0],
       });
-      console.log(this.state);
-      console.log(this.props);
     };
 
     const finishButtonClicked = () => {
@@ -124,6 +109,7 @@ class MakeMapGL extends Component {
                     selectedCrumb: crumb,
                     selectedCrumbImage: crumb.image_name,
                   });
+
                   console.log(crumb.image_name);
                   get("/api/crumbimage", { image_name: crumb.image_name }).then((image) => {
                     console.log("received image");
@@ -206,9 +192,12 @@ class MakeMapGL extends Component {
           ) : null}
         </MapGL>
 
-        {/* <div className="header">
-        Double click to drop crumbs... */}
+        {/* 4️⃣ HEADER SECTION */}
+
         <div className="header">
+
+            {this.state.sideBarReady ? (<SideBar crumbs={this.state.crumbsList}/>) : null}
+
             <div className="instruction-label">
                 Double click to drop crumbs.
             </div> 
@@ -217,7 +206,7 @@ class MakeMapGL extends Component {
         <button className="finish-button" onClick={finishButtonClicked}>
           Finish
         </button>
-        {/* </div> */}
+        
       </div>
     );
   }
