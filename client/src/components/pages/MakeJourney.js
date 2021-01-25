@@ -132,7 +132,7 @@ class MakeMapGL extends Component {
           ref={this.mapRef}
           {...this.state.viewport}
           width="100vw"
-          height="91vh"
+          height="90vh"
           mapStyle="mapbox://styles/mapbox/light-v9"
           onViewportChange={(viewport) => this.setState({ viewport })}
           mapboxApiAccessToken={MAPBOX_TOKEN}
@@ -258,7 +258,7 @@ class MakeMapGL extends Component {
         {/* 4️⃣ HEADER SECTION */}
 
         <div className="header">
-          {this.state.sideBarReady ? <SideBar crumbs={this.state.crumbsList} /> : null}
+          {/* {this.state.sideBarReady ? <SideBar crumbs={this.state.crumbsList} /> : null} */}
 
           <div className="instruction-label">Double click to drop crumbs.</div>
         </div>

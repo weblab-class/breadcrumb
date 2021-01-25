@@ -100,14 +100,19 @@ class MakeMapGL extends Component {
         newEntryLon: event.lngLat[0],
       });
     };
+    const backButtonClicked = () => {
+      console.log("Back button clicked");
 
+      const profilePath = "/profile/" + this.props.userId;
+      navigate(profilePath);
+    };
     return (
       <div>
         <MapGL
           ref={this.mapRef}
           {...this.state.viewport}
           width="100vw"
-          height="91vh"
+          height="90vh"
           mapStyle="mapbox://styles/mapbox/light-v9"
           onViewportChange={(viewport) => this.setState({ viewport })}
           mapboxApiAccessToken={MAPBOX_TOKEN}
@@ -183,6 +188,9 @@ class MakeMapGL extends Component {
         <div className="header">
           {this.state.sideBarReady ? <SideBar crumbs={this.state.crumbsList} /> : null}
         </div>
+        <button className="finish-button" onClick={backButtonClicked}>
+          Back
+        </button>
       </div>
     );
   }
