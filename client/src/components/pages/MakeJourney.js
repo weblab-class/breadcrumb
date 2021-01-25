@@ -84,6 +84,27 @@ class MakeMapGL extends Component {
       navigate(profilePath);
     };
 
+    const crumbMarkerClicked = (event, crumb) => {
+        console.log(event, crumb)
+        event.preventDefault();
+        this.setState({
+          selectedCrumb: crumb,
+          selectedCrumbImage: crumb.image_name,
+        });
+
+        console.log(crumb.image_name);
+        get("/api/crumbimage", { image_name: crumb.image_name }).then((image) => {
+          console.log("received image");
+          console.log(image);
+
+          if (image.img === "Err: could not find image") {
+            this.setState({ selectedCrumbImage: null });
+          } else {
+            this.setState({ selectedCrumbImage: image.img });
+          }
+        });
+      }
+
     return (
       // <div clasName="make-journey-border-outer">
       // <div clasName="make-journey-border-inner">
@@ -103,25 +124,7 @@ class MakeMapGL extends Component {
               <button
                 className="marker"
                 style={zoomAdjustedSize}
-                onClick={(event) => {
-                  event.preventDefault();
-                  this.setState({
-                    selectedCrumb: crumb,
-                    selectedCrumbImage: crumb.image_name,
-                  });
-
-                  console.log(crumb.image_name);
-                  get("/api/crumbimage", { image_name: crumb.image_name }).then((image) => {
-                    console.log("received image");
-                    console.log(image);
-
-                    if (image.img === "Err: could not find image") {
-                      this.setState({ selectedCrumbImage: null });
-                    } else {
-                      this.setState({ selectedCrumbImage: image.img });
-                    }
-                  });
-                }}
+                onClick={crumbMarkerClicked}
               >
                 <img src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/apple/271/bread_1f35e.png"></img>
               </button>

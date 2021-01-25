@@ -23,14 +23,18 @@ function SideBar({crumbs}) {
         <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
 
             <div className="close-button">
-                <FaIcons.FaWindowMinimize value={{ style: {fill: 'brown' }}} onClick={showSidebar} />
+                <FaIcons.FaWindowMinimize color="brown" onClick={showSidebar} />
             </div>
         
-            {crumbs.map((item, index) => {
+            {crumbs.map((crumb, index) => {
               return (
-                <div key={index} className="crumb-side-entry">
-                    <span>{item.title} <br></br> </span> 
-                    {item.description}
+                <div key={index} className="crumb-side-entry"
+                onClick={
+                    console.log(crumb)
+                }
+                >
+                    <span>{crumb.title} <br></br> </span> 
+                    {crumb.description}
                 </div>
               );
             })}
