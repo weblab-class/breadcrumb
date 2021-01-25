@@ -1,3 +1,4 @@
+import { Link, navigate } from "@reach/router";
 import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 
 import EditTitlePopup from "./EditTitlePopup";
@@ -15,7 +16,7 @@ const theme = createMuiTheme({
   },
 });
 
-const options = ["Delete journey"];
+const options = ["Edit crumbs", "Delete journey"];
 
 const ITEM_HEIGHT = 36;
 
@@ -45,7 +46,9 @@ export default function JourneyMenu({ journeyId }) {
       ? startDelete()
       : event.currentTarget.dataset.button === "Edit journey title"
       ? editJourneyTitle()
-      : console.log("nothing");
+      : event.currentTarget.dataset.button === "Edit crumbs"
+      ? navigate("/journey/" + journeyId)
+      : console.log("nothing!");
   };
   const StyledMenuIcon = withStyles((theme) => ({
     root: {

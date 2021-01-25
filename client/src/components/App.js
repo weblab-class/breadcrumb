@@ -9,6 +9,7 @@ import MakeJourney from "./pages/MakeJourney";
 import NavBar from "./modules/NavBar";
 import NotFound from "./pages/NotFound.js";
 import Profile from "./pages/Profile.js";
+import ViewJourney from "./pages/ViewJourney";
 import { socket } from "../client-socket.js";
 
 /**
@@ -73,6 +74,8 @@ class App extends Component {
           />
           <Profile path="/profile/:userId" userId={this.state.userId} />
           <MakeJourney path="/journey/:journeyId" userId={this.state.userId} />
+          <ViewJourney path="/viewjourney/:journeyId" userId={this.state.userId} />
+
           <NotFound default />
         </Router>
       </>
