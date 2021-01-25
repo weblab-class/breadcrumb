@@ -51,22 +51,22 @@ router.post("/journey", auth.ensureLoggedIn, (req, res) => {
     creator_id: req.user._id,
     journey_id: req.body.journey_id,
     // thumbnail: req.body.thumbnail,
-    crumbs: req.body.crumbs,  
-    dateTime: req.body.dateTime, 
+    crumbs: req.body.crumbs,
+    dateTime: req.body.dateTime,
   });
 
   newJourney.save().then((journey) => res.send(journey));
 });
 
 // DELETE A JOURNEY OBJECT AND CRUMBS ASSOCIATED WITH IT
-router.post('/deletejourney', (req,res) => {
-  JourneyPost.deleteOne({journey_id: req.body.journey_id}).then((response) => {
-    console.log('FINAL JOURNEY RESPONSE' + response);
+router.post("/deletejourney", (req, res) => {
+  JourneyPost.deleteOne({ journey_id: req.body.journey_id }).then((response) => {
+    console.log("FINAL JOURNEY RESPONSE" + response);
   });
-  CrumbEntry.deleteMany({journey_id: req.body.journey_id}).then((response) => {
-    console.log('FINAL CRUMB RESPONSE' + response);
+  CrumbEntry.deleteMany({ journey_id: req.body.journey_id }).then((response) => {
+    console.log("FINAL CRUMB RESPONSE" + response);
   });
-})
+});
 
 // GET ALL THE CRUMBS FOR A CERTAIN JOURNEY
 router.get("/journeycrumbs", auth.ensureLoggedIn, (req, res) => {
@@ -75,31 +75,41 @@ router.get("/journeycrumbs", auth.ensureLoggedIn, (req, res) => {
     journey_id: req.query.journey_id,
   }).then((journey) => {
     console.log("FOUND THESE CRUMBS");
-    res.send(journey)
+    res.send(journey);
   });
 });
 
 // GET IMAGE WHEN CRUMB CLICKED
 router.get("/crumbimage", auth.ensureLoggedIn, (req, res) => {
-  console.log("RECEIVED!!")
+  console.log("RECEIVED!!");
   console.log(req.query.image_name);
 
-    downloadImagePromise(req.query.image_name)
-        .catch(err => "Err: could not find image")
-    .then(images => {
-      res.send({img: images});
-    }).catch(err => {
+  downloadImagePromise(req.query.image_name)
+    .catch((err) => "Err: could not find image")
+    .then((images) => {
+      res.send({ img: images });
+    })
+    .catch((err) => {
       console.log("ERR getImages this shouldn't happen");
       res.status(500).send({
-        message: "unknown error"
+        message: "unknown error",
       });
     });
 });
 
-
 router.post("/journeyupdate", auth.ensureLoggedIn, (req, res) => {
-  JourneyPost.findOne({'journey_id': req.body.journey_id}).then((journey) => {
+  JourneyPost.findOne({ journey_id: req.body.journey_id }).then((journey) => {
     journey.crumbs = req.body.crumbs;
+    journey.save();
+    res.send(journey);
+  });
+});
+
+router.post("/journeytitle", (req, res) => {
+  console.log("made this post request here");
+  console.log(req.body);
+  JourneyPost.findOne({ journey_id: req.body.journey_id }).then((journey) => {
+    journey.journey_title = req.body.new_title;
     journey.save();
     res.send(journey);
   });
@@ -116,12 +126,12 @@ router.get("/journeys", (req, res) => {
 
 // NEW CRUMB CREATION ON EVERY FORM SUBMISSION
 router.post("/crumb", auth.ensureLoggedIn, (req, res) => {
-  
-  if (typeof (req.body.image_name) !== 'string') {
-    throw new Error("Can only handle images encoded as strings. Got type: "
-      + typeof (req.body.image_name));
+  if (typeof req.body.image_name !== "string") {
+    throw new Error(
+      "Can only handle images encoded as strings. Got type: " + typeof req.body.image_name
+    );
   }
-  
+
   // console.log("received this in body req" + req.body.image);
   if (req.body.image_name == "none") {
     // console.log("the body was none");
@@ -136,9 +146,8 @@ router.post("/crumb", auth.ensureLoggedIn, (req, res) => {
       image_name: null,
     });
     newCrumb.save().then((crumb) => res.send(crumb));
-
   } else {
-    uploadImagePromise(req.body.image_name).then(imageName => {
+    uploadImagePromise(req.body.image_name).then((imageName) => {
       const newCrumb = new CrumbEntry({
         creator_id: req.body.creator_id,
         journey_id: req.body.journey_id,
@@ -150,9 +159,8 @@ router.post("/crumb", auth.ensureLoggedIn, (req, res) => {
         image_name: imageName,
       });
       newCrumb.save().then((crumb) => res.send(crumb));
-    }); 
+    });
   }
-  
 });
 
 // PROFILE PAGE ROUTES
