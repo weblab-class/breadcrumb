@@ -47,8 +47,7 @@ class MakeMapGL extends Component {
   componentDidMount() {
     window.addEventListener("resize", this.resize);
     this.resize();
-
-    document.title = "Make A Journey";
+    document.title = this.props.journeyTitle;
 
     const body = {
       journey_id: this.props.journeyId,
@@ -86,16 +85,6 @@ class MakeMapGL extends Component {
     });
   };
 
-  // if you are happy with Geocoder default settings, you can just use handleViewportChange directly
-  handleGeocoderViewportChange = (viewport) => {
-    const geocoderDefaultOverrides = { transitionDuration: 1000 };
-
-    return this.handleViewportChange({
-      ...viewport,
-      ...geocoderDefaultOverrides,
-    });
-  };
-
   render() {
     const zoomAdjustedSize = {
       height: `${6 * this.state.viewport.zoom}px`,
@@ -111,20 +100,6 @@ class MakeMapGL extends Component {
         newEntryLon: event.lngLat[0],
       });
     };
-    const finishButtonClicked = () => {
-      console.log("Finish button clicked");
-
-      const profilePath = "/profile/" + this.props.userId;
-      navigate(profilePath);
-    };
-    const onDelete = () => {
-      console.log("deleting!");
-      console.log(this.selectedCrumb);
-      post("/api/deletecrumb", this.selectedCrumb).then((update) => {
-        // display this comment on the screen
-        console.log(update);
-      });
-    };
 
     return (
       <div>
@@ -136,20 +111,7 @@ class MakeMapGL extends Component {
           mapStyle="mapbox://styles/mapbox/light-v9"
           onViewportChange={(viewport) => this.setState({ viewport })}
           mapboxApiAccessToken={MAPBOX_TOKEN}
-          onDblClick={showAddMarkerPopup}
         >
-          <Geocoder
-            mapRef={this.mapRef}
-            onViewportChange={this.handleGeocoderViewportChange}
-            mapboxApiAccessToken={MAPBOX_TOKEN}
-            value=""
-            onSelect={showAddMarkerPopup}
-            hideOnSelect={true}
-            collapsed={true}
-            clearAndBlurOnEsc={true}
-            position="top-left"
-            showLoader={false}
-          />
           {/* 1️⃣ LOAD/GENERATE CRUMBS */}
           {this.state.crumbsList.map((crumb) => (
             <Marker key={crumb.title} latitude={crumb.latitude} longitude={crumb.longitude}>
@@ -214,58 +176,13 @@ class MakeMapGL extends Component {
               </div>
             </Popup>
           ) : null}
-
-          {/* 3️⃣ CHECK FOR DOUBLE CLICK + NEW CRUMB ENTRY FORM */}
-          {this.state.addNewEntry ? (
-            <Popup
-              latitude={this.state.newEntryLat}
-              longitude={this.state.newEntryLon}
-              closeOnClick={false}
-              onClose={() => {
-                this.setState({ addNewEntry: null });
-              }}
-            >
-              <div>
-                <CrumbEntryForm
-                  latitude={this.state.newEntryLat}
-                  longitude={this.state.newEntryLon}
-                  journey_id={this.props.journeyId}
-                  user_id={this.props.userId}
-                  current_crumbs={this.state.crumbsList}
-                  updateCrumbList={(crumb) => {
-                    const body = {
-                      journey_id: this.props.journeyId,
-                      crumbs: this.state.crumbIdList,
-                    };
-                    console.log(body);
-                    post("/api/journeyupdate", body).then((update) => {
-                      // display this comment on the screen
-                      console.log(update);
-                    });
-
-                    this.setState({
-                      crumbsList: this.state.crumbsList.concat(crumb),
-                      crumbIdList: this.state.crumbIdList.concat(crumb.crumb_id),
-                      addNewEntry: null,
-                    });
-                  }}
-                />
-              </div>
-            </Popup>
-          ) : null}
         </MapGL>
 
         {/* 4️⃣ HEADER SECTION */}
 
         <div className="header">
           {this.state.sideBarReady ? <SideBar crumbs={this.state.crumbsList} /> : null}
-
-          <div className="instruction-label">Double click to drop crumbs.</div>
         </div>
-
-        <button className="finish-button" onClick={finishButtonClicked}>
-          Finish
-        </button>
       </div>
     );
   }

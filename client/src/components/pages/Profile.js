@@ -119,7 +119,7 @@ class Profile extends Component {
   formatDateTime = (journey) => {
     if (journey && journey.dateTime) {
       let linkName = journey.dateTime;
-      let mapLink = "/journey/" + journey.journey_id;
+      let mapLink = "/viewjourney/" + journey.journey_id;
       let linkString = <Link to={`${mapLink}`}> {linkName} </Link>;
       return linkString;
     }

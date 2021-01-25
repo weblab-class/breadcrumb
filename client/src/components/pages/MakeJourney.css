@@ -13,7 +13,7 @@ body {
   height: 100px;
   width: 100%;
   position: absolute;
-  top: 0px;
+  top: 58px;
   left: 0px;
 
   font-family: var(--titlefont);
@@ -24,7 +24,7 @@ body {
 .instruction-label {
   margin: auto;
   position: relative;
-  top: 60px;
+  top: 0px;
 
   width: 360px;
   height: 47.5px;
@@ -36,11 +36,12 @@ body {
   color: var(--brown);
   border: 1px solid var(--brown);
 
-  z-index: 9000;
+  z-index: 0;
 }
 
 .mapboxgl-popup {
   width: 400px;
+  z-index: 1;
 }
 
 button {
@@ -72,6 +73,7 @@ button:hover {
   font-family: var(--bodyfont);
   font-size: var(--m);
   color: var(--cream);
+  z-index: 2;
 }
 
 .popup-image {
@@ -102,10 +104,34 @@ img {
 .mapboxgl-ctrl.mapboxgl-ctrl-attrib {
   background-color: transparent;
 }
-.mapboxgl-ctrl.mapboxgl-ctrl-attrib .mapbox-improve-map {
-  font-size: var(--xs);
+.mapboxgl-ctrl.mapboxgl-ctrl-attrib a:link {
+  display: none;
 }
 
-.mapboxgl-ctrl.mapboxgl-ctrl-attrib .mapbox-improve-map > a:link {
+.mapboxgl-ctrl.mapboxgl-ctrl-attrib .mapbox-improve-map {
   display: none;
+}
+.mapboxgl-ctrl-geocoder {
+  position: absolute;
+  z-index: 1;
+  left: 20px;
+  top: 20px;
+  font-family: "DM Sans";
+  color: var(--brown);
+}
+.mapboxgl-ctrl-geocoder--input {
+  font-family: "DM Serif";
+}
+.mapbox-ctrl-top-left {
+  left: 20px;
+  top: 60px;
+}
+
+.mapboxgl-ctrl-geocoder .suggestions {
+  font-family: "DM Sans";
+}
+.marker {
+  background-image: url("https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/apple/271/bread_1f35e.png");
+  background-size: 100%;
+  background-repeat: no-repeat;
 }
