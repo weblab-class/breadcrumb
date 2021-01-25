@@ -52,6 +52,7 @@ class App extends Component {
 
   render() {
     console.log(this.state);
+    console.log("APP JS CURRENT URL PATH", window.location.href);
     return (
       <>
         <Location>

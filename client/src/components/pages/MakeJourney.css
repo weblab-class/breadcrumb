@@ -2,6 +2,7 @@ body {
     margin: default;
     padding: default;
     font-family: var(--bodyfont);
+    overflow: hidden;
 }
 .header {
     /* DROP SHADOW

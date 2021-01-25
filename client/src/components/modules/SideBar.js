@@ -14,24 +14,26 @@ function SideBar({crumbs}) {
 
   return (
     <>
-      <IconContext.Provider value={{ color: '#fff' }} className="hamburger">
+      <IconContext.Provider value={{ style: {color: '#fff' }}} className="hamburger">
 
-        <div className='navbar'>
+        <div className='nav-icon'>
             <FaIcons.FaBars onClick={showSidebar} />
         </div>
 
         <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
-            <FaIcons.FaBars onClick={showSidebar} />
-            
-          <ul className='nav-menu-items'>
+
+            <div className="close-button">
+                <FaIcons.FaWindowMinimize value={{ style: {fill: 'brown' }}} onClick={showSidebar} />
+            </div>
+        
             {crumbs.map((item, index) => {
               return (
-                <li key={index} >
-                    <span>{item.title}</span>
-                </li>
+                <div key={index} className="crumb-side-entry">
+                    <span>{item.title} <br></br> </span> 
+                    {item.description}
+                </div>
               );
             })}
-          </ul>
         </nav>
       </IconContext.Provider>
     </>
