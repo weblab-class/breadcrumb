@@ -1,100 +1,111 @@
 body {
-    margin: default;
-    padding: default;
-    font-family: var(--bodyfont);
-    overflow: hidden;
+  margin: default;
+  padding: default;
+  font-family: var(--bodyfont);
+  overflow: hidden;
 }
 .header {
-    /* DROP SHADOW
+  /* DROP SHADOW
     -webkit-box-shadow: 0px 10px 22px 0px var(--brown);
     -moz-box-shadow: 0px 10px 22px 0px var(--brown);
     box-shadow: 0px 10px 22px 0px var(--brown); */
 
-    height: 100px;
-    width: 100%;
-    position: absolute;
-    top: 0px;
-    left: 0px;
+  height: 100px;
+  width: 100%;
+  position: absolute;
+  top: 0px;
+  left: 0px;
 
-    font-family: var(--titlefont);
-    font-size: var(--l);
-    padding: 20px;
+  font-family: var(--titlefont);
+  font-size: var(--l);
+  padding: 20px;
 }
 
 .instruction-label {
-    margin: auto;
-    position: relative;
-    top: 60px;
+  margin: auto;
+  position: relative;
+  top: 60px;
 
-    width: 360px;
-    height: 47.5px;
-    border-radius: 100px;
-    padding-top: 12.5px;
-    text-align: center;
+  width: 360px;
+  height: 47.5px;
+  border-radius: 100px;
+  padding-top: 12.5px;
+  text-align: center;
 
-    background-color: var(--cream);
-    color: var(--brown);
-    border: 1px solid var(--brown);
+  background-color: var(--cream);
+  color: var(--brown);
+  border: 1px solid var(--brown);
 
-    z-index: 9000;
+  z-index: 9000;
 }
 
-.mapboxgl-popup{
-    width: 400px;
+.mapboxgl-popup {
+  width: 400px;
 }
 
 button {
-    border: none;
-    background-color: transparent;
+  border: none;
+  background-color: transparent;
 }
 
-button:focus{
-    outline: none;
+button:focus {
+  outline: none;
 }
 
-button:hover{
-    cursor: pointer;
+button:hover {
+  cursor: pointer;
 }
 
-.marker:hover{
-    cursor: pointer; 
+.marker:hover {
+  cursor: pointer;
 }
 
 .finish-button {
-    width: 100px;
-    height: 60px;
-    background-color: var(--brown);
-    position: absolute;
-    top: 80px;
-    right: 20px;
-    border-radius: 100px;
+  width: 100px;
+  height: 60px;
+  background-color: var(--brown);
+  position: absolute;
+  top: 80px;
+  right: 20px;
+  border-radius: 100px;
 
-    font-family: var(--bodyfont);
-    font-size: var(--m);
-    color: var(--cream);
+  font-family: var(--bodyfont);
+  font-size: var(--m);
+  color: var(--cream);
 }
 
 .popup-image {
-    width: 100%;
-    max-height: 200px;
-    object-fit: contain;
+  width: 100%;
+  max-height: 200px;
+  object-fit: contain;
 }
 
 .marker {
-    width: 300px;
-    transform: translate(-50%, -50%);
+  width: 300px;
+  transform: translate(-50%, -50%);
 }
 
 img {
-    width: 100%;
+  width: 100%;
 }
 
 .crumb-popup {
-    width: 50px;
+  width: 50px;
 }
 
 .popup-title {
-    font-family: var(--titlefont);
-    font-size: var(--m);
-    padding-top: 10px;
+  font-family: var(--titlefont);
+  font-size: var(--m);
+  padding-top: 10px;
+}
+
+.mapboxgl-ctrl.mapboxgl-ctrl-attrib {
+  background-color: transparent;
+}
+.mapboxgl-ctrl.mapboxgl-ctrl-attrib .mapbox-improve-map {
+  font-size: var(--xs);
+}
+
+.mapboxgl-ctrl.mapboxgl-ctrl-attrib .mapbox-improve-map > a:link {
+  display: none;
 }
