@@ -125,14 +125,15 @@ class MakeMapGL extends Component {
           this.setState({ selectedCrumbImage: image.img });
         }
       });
-  }   
+  }
+
     return (
       <div>
         <MapGL
           ref={this.mapRef}
           {...this.state.viewport}
           width="100vw"
-          height="90vh"
+          height="100vh"
           mapStyle="mapbox://styles/mapbox/light-v9"
           onViewportChange={(viewport) => this.setState({ viewport })}
           mapboxApiAccessToken={MAPBOX_TOKEN}

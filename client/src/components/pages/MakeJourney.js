@@ -259,16 +259,6 @@ class MakeMapGL extends Component {
         {/* 4️⃣ HEADER SECTION */}
 
         <div className="header">
-<<<<<<< HEAD
-          {/* {this.state.sideBarReady ? 
-          <SideBar 
-            
-            /> 
-          : null} */}
-=======
-          {/* {this.state.sideBarReady ? <SideBar crumbs={this.state.crumbsList} /> : null} */}
->>>>>>> d1dc63ffcc879a22e47853198bafbfe9d55f0400
-
           <div className="instruction-label">Double click to drop crumbs.</div>
         </div>
 
