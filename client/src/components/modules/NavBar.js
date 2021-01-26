@@ -16,7 +16,7 @@ class NavBar extends Component {
   }
 
   render() {
-    if (this.props.location.pathname.includes("makejourney")) {
+    if (this.props.location.pathname.includes("journey")) {
       return null;
     } else {
       return (
