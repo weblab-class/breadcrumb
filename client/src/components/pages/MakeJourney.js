@@ -133,7 +133,7 @@ class MakeMapGL extends Component {
           ref={this.mapRef}
           {...this.state.viewport}
           width="100vw"
-          height="90vh"
+          height="110vh"
           mapStyle="mapbox://styles/mapbox/light-v9"
           onViewportChange={(viewport) => this.setState({ viewport })}
           mapboxApiAccessToken={MAPBOX_TOKEN}
