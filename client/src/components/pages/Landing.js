@@ -40,6 +40,7 @@ class Landing extends Component {
           : 
           console.log('not signed in')
         } */}
+        <iframe src="https://player.vimeo.com/video/504940062" width="640" height="395" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
         </div>
       </>
     );
