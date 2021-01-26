@@ -47,26 +47,26 @@
     width: 350px;
     height: 110vh;
 
-    /* display: flex;
+
+  /* display: flex;
     flex-direction: column;
     justify-content: left; */
 
-    position: fixed;
-    left: -100%;
-    top: -10px;
-    transition: 850ms;
-    overflow: hidden;
-  }
-  
-  .nav-menu.active {
-    left: 0;
-    transition: 350ms;
-  }
-  
-  span {
-    /* margin-left: 16px; */
-    color: var(--brown);
-    font-family: var(--titlefont);
-    font-size: 16px;
-  }
-  
+  position: fixed;
+  left: -100%;
+  top: 58px;
+  transition: 850ms;
+  overflow: hidden;
+}
+
+.nav-menu.active {
+  left: 0;
+  transition: 350ms;
+}
+
+span {
+  /* margin-left: 16px; */
+  color: var(--brown);
+  font-family: var(--titlefont);
+  font-size: 16px;
+}

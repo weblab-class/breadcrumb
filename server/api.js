@@ -163,6 +163,14 @@ router.post("/crumb", auth.ensureLoggedIn, (req, res) => {
   }
 });
 
+router.post("/deletecrumb", (req, res) => {
+  console.log(req.body);
+  CrumbEntry.deleteOne({ crumb_id: req.body.crumb_id }).then((response) => {
+    res.send(response);
+  });
+  console.log("finished deleting?");
+});
+
 // PROFILE PAGE ROUTES
 router.get("/user", (req, res) => {
   console.log("getting user...");
