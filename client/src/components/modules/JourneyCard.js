@@ -24,7 +24,6 @@ class JourneyCard extends Component {
 
   startDelete = () => {
     post("/api/deletejourney", { journey_id: this.props.journeyId });
-    window.location.reload();
   };
 
   render() {

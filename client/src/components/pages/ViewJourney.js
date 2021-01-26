@@ -102,6 +102,11 @@ class MakeMapGL extends Component {
         newEntryLon: event.lngLat[0],
       });
     };
+    const backButtonClicked = () => {
+      console.log("Back button clicked");
+      const profilePath = "/profile/" + this.props.userId;
+      navigate(profilePath);
+    };
 
     const updateSelectedCrumb = (crumb) => {
       this.setState({
@@ -120,15 +125,14 @@ class MakeMapGL extends Component {
           this.setState({ selectedCrumbImage: image.img });
         }
       });
-  }
-
+  }   
     return (
       <div>
         <MapGL
           ref={this.mapRef}
           {...this.state.viewport}
           width="100vw"
-          height="91vh"
+          height="90vh"
           mapStyle="mapbox://styles/mapbox/light-v9"
           onViewportChange={(viewport) => this.setState({ viewport })}
           mapboxApiAccessToken={MAPBOX_TOKEN}
@@ -206,6 +210,9 @@ class MakeMapGL extends Component {
           <SideBar crumbs={this.state.crumbsList} updateSelectedCrumb={updateSelectedCrumb}/> 
           : null}
         </div>
+        <button className="finish-button" onClick={backButtonClicked}>
+          Back
+        </button>
       </div>
     );
   }
