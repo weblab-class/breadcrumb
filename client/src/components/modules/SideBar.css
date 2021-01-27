@@ -2,9 +2,6 @@
   background-color: var(--brown);
   height: 24px;
   width: 24px;
-  /* position: absolute;
-    top: 80px;
-    left: 20px; */
   border-radius: 100px;
   padding: 16px;
 }
@@ -46,9 +43,6 @@
   background-color: var(--brown);
   width: 350px;
   height: 110vh;
-  /* display: flex;
-    flex-direction: column;
-    justify-content: left; */
 
   position: fixed;
   left: -100%;
@@ -65,7 +59,6 @@
 }
 
 span {
-  /* margin-left: 16px; */
   color: var(--brown);
   font-family: var(--titlefont);
   font-size: 16px;

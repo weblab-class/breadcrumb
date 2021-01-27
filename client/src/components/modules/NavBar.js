@@ -32,7 +32,6 @@ class NavBar extends Component {
                 Profile
               </Link>
             )}
-            {console.log("LOCATION" + JSON.stringify(this.props.location))}
           </div>
           <div className="google-button ">
             {this.props.userId ? (

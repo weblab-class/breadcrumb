@@ -54,9 +54,7 @@ class MakeMapGL extends Component {
     const body = {
       journey_id: this.props.journeyId,
     };
-    console.log(body);
     get("/api/journeycrumbs", body).then((crumbObjs) => {
-      console.log("THESE ARE THE CRUMB OBJS RETURNED", crumbObjs);
       crumbObjs.map((crumb) => {
         this.setState({
           crumbsList: this.state.crumbsList.concat(crumb),
@@ -65,9 +63,6 @@ class MakeMapGL extends Component {
         });
       });
     });
-
-    console.log("INITIAL PROPS", this.props);
-    console.log("INITIAL STATE", this.state);
   }
 
   componentWillUnmount() {
@@ -87,7 +82,6 @@ class MakeMapGL extends Component {
     });
   };
 
-  // if you are happy with Geocoder default settings, you can just use handleViewportChange directly
   handleGeocoderViewportChange = (viewport) => {
     const geocoderDefaultOverrides = { transitionDuration: 1000 };
 
@@ -103,7 +97,6 @@ class MakeMapGL extends Component {
       width: `${6 * this.state.viewport.zoom}px`,
     };
     const showAddMarkerPopup = (event) => {
-      console.log("showing something");
       event.preventDefault();
 
       this.setState({
@@ -113,18 +106,8 @@ class MakeMapGL extends Component {
       });
     };
     const finishButtonClicked = () => {
-      console.log("Finish button clicked");
-
       const profilePath = "/profile/" + this.props.userId;
       navigate(profilePath);
-    };
-    const onDelete = () => {
-      console.log("deleting!");
-      console.log(this.selectedCrumb);
-      post("/api/deletecrumb", this.selectedCrumb).then((update) => {
-        // display this comment on the screen
-        console.log(update);
-      });
     };
 
     return (
@@ -165,10 +148,8 @@ class MakeMapGL extends Component {
                     viewport: { latitude: crumb.latitude, longitude: crumb.longitude, zoom: 5 },
                   });
 
-                  console.log(crumb.image_name);
                   get("/api/crumbimage", { image_name: crumb.image_name }).then((image) => {
                     console.log("received image");
-                    console.log(image);
 
                     if (image.img === "Err: could not find image") {
                       this.setState({ selectedCrumbImage: null });
@@ -177,9 +158,7 @@ class MakeMapGL extends Component {
                     }
                   });
                 }}
-              >
-                {/* <img src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/apple/271/bread_1f35e.png"></img> */}
-              </button>
+              ></button>
             </Marker>
           ))}
 
@@ -189,7 +168,6 @@ class MakeMapGL extends Component {
               latitude={this.state.selectedCrumb.latitude}
               longitude={this.state.selectedCrumb.longitude}
               onClose={() => {
-                // console.log(this.state.selectedCrumb);
                 this.setState({
                   selectedCrumb: null,
                   selectedCrumbImage: null,
@@ -203,16 +181,6 @@ class MakeMapGL extends Component {
                 {this.state.selectedCrumbImage ? (
                   <img className="popup-image" src={this.state.selectedCrumbImage}></img>
                 ) : null}
-                {/* <br></br>
-                <button
-                  onClick={() => {
-                    console.log("shit");
-                    onDelete;
-                  }}
-                  className="create-button"
-                >
-                  Delete Entry
-                </button> */}
               </div>
             </Popup>
           ) : null}
@@ -235,21 +203,17 @@ class MakeMapGL extends Component {
                   user_id={this.props.userId}
                   current_crumbs={this.state.crumbsList}
                   updateCrumbList={(crumb) => {
-                    const body = {
-                      journey_id: this.props.journeyId,
-                      crumbs: this.state.crumbIdList,
-                    };
-                    console.log(body);
-                    post("/api/journeyupdate", body).then((update) => {
-                      // display this comment on the screen
-                      console.log(update);
-                    });
-
                     this.setState({
                       crumbsList: this.state.crumbsList.concat(crumb),
                       crumbIdList: this.state.crumbIdList.concat(crumb.crumb_id),
                       addNewEntry: null,
                     });
+
+                    const body = {
+                      journey_id: this.props.journeyId,
+                      crumbs: this.state.crumbIdList,
+                    };
+                    post("/api/journeyupdate", body);
                   }}
                 />
               </div>

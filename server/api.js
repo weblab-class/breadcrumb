@@ -46,11 +46,9 @@ router.post("/initsocket", (req, res) => {
 
 // MAKE A NEW JOURNEY OBJECT
 router.post("/journey", auth.ensureLoggedIn, (req, res) => {
-  console.log("MAKING NEW JOURNEY");
   const newJourney = new JourneyPost({
     creator_id: req.user._id,
     journey_id: req.body.journey_id,
-    // thumbnail: req.body.thumbnail,
     crumbs: req.body.crumbs,
     dateTime: req.body.dateTime,
   });
@@ -60,37 +58,27 @@ router.post("/journey", auth.ensureLoggedIn, (req, res) => {
 
 // DELETE A JOURNEY OBJECT AND CRUMBS ASSOCIATED WITH IT
 router.post("/deletejourney", (req, res) => {
-  JourneyPost.deleteOne({ journey_id: req.body.journey_id }).then((response) => {
-    console.log("FINAL JOURNEY RESPONSE" + response);
-  });
-  CrumbEntry.deleteMany({ journey_id: req.body.journey_id }).then((response) => {
-    console.log("FINAL CRUMB RESPONSE" + response);
-  });
+  JourneyPost.deleteOne({ journey_id: req.body.journey_id }).then((response) => {});
+  CrumbEntry.deleteMany({ journey_id: req.body.journey_id }).then((response) => {});
 });
 
 // GET ALL THE CRUMBS FOR A CERTAIN JOURNEY
 router.get("/journeycrumbs", auth.ensureLoggedIn, (req, res) => {
-  console.log("THIS WAS THE CRUMB QUERY", req.query.journey_id);
   CrumbEntry.find({
     journey_id: req.query.journey_id,
   }).then((journey) => {
-    console.log("FOUND THESE CRUMBS");
     res.send(journey);
   });
 });
 
 // GET IMAGE WHEN CRUMB CLICKED
 router.get("/crumbimage", auth.ensureLoggedIn, (req, res) => {
-  console.log("RECEIVED!!");
-  console.log(req.query.image_name);
-
   downloadImagePromise(req.query.image_name)
     .catch((err) => "Err: could not find image")
     .then((images) => {
       res.send({ img: images });
     })
     .catch((err) => {
-      console.log("ERR getImages this shouldn't happen");
       res.status(500).send({
         message: "unknown error",
       });
@@ -106,16 +94,12 @@ router.post("/journeyupdate", auth.ensureLoggedIn, (req, res) => {
 });
 
 router.get("/journeytitle", (req, res) => {
-  console.log("made this post request here!!!!!!!");
-  console.log(req.body);
   JourneyPost.findOne({ journey_id: req.query.journey_id }).then((journey) => {
     res.send(journey);
   });
 });
 
 router.post("/journeytitle", (req, res) => {
-  console.log("made this post request here");
-  console.log(req.body);
   JourneyPost.findOne({ journey_id: req.body.journey_id }).then((journey) => {
     journey.journey_title = req.body.new_title;
     journey.save();
@@ -140,9 +124,7 @@ router.post("/crumb", auth.ensureLoggedIn, (req, res) => {
     );
   }
 
-  // console.log("received this in body req" + req.body.image);
   if (req.body.image_name == "none") {
-    // console.log("the body was none");
     const newCrumb = new CrumbEntry({
       creator_id: req.body.creator_id,
       journey_id: req.body.journey_id,
@@ -172,23 +154,19 @@ router.post("/crumb", auth.ensureLoggedIn, (req, res) => {
 });
 
 router.post("/deletecrumb", (req, res) => {
-  console.log(req.body);
   CrumbEntry.deleteOne({ crumb_id: req.body.crumb_id }).then((response) => {
     res.send(response);
   });
-  console.log("finished deleting?");
 });
 
 // PROFILE PAGE ROUTES
 router.get("/user", (req, res) => {
-  console.log("getting user...");
   User.findById(req.query.userid).then((user) => {
     res.send(user);
   });
 });
 
 router.post("/user/bio", (req, res) => {
-  console.log(req.body);
   User.findById(req.user._id).then((user) => {
     user.bio = req.body.content;
     user.save();

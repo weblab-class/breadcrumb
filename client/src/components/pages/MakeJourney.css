@@ -6,11 +6,6 @@ body {
 }
 
 .header {
-  /* DROP SHADOW
-    -webkit-box-shadow: 0px 10px 22px 0px var(--brown);
-    -moz-box-shadow: 0px 10px 22px 0px var(--brown);
-    box-shadow: 0px 10px 22px 0px var(--brown); */
-
   height: 100px;
   width: 100%;
   position: absolute;

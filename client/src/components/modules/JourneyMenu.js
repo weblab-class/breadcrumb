@@ -29,13 +29,11 @@ export default function JourneyMenu({ journeyId }) {
   };
 
   const startDelete = () => {
-    console.log(journeyId);
     post("/api/deletejourney", { journey_id: journeyId });
     window.location.reload();
   };
 
   const editJourneyTitle = () => {
-    console.log("pls edit me");
     handleClickOpen();
   };
 
@@ -48,7 +46,7 @@ export default function JourneyMenu({ journeyId }) {
       ? editJourneyTitle()
       : event.currentTarget.dataset.button === "Edit crumbs"
       ? navigate("/journey/" + journeyId)
-      : console.log("nothing!");
+      : null;
   };
   const StyledMenuIcon = withStyles((theme) => ({
     root: {

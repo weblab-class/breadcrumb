@@ -34,7 +34,6 @@ class App extends Component {
   }
 
   handleLogin = (res) => {
-    console.log(`Logged in as ${res.profileObj.name}`);
     const userToken = res.tokenObj.id_token;
     post("/api/login", { token: userToken }).then((user) => {
       this.setState({ userId: user._id });
@@ -52,8 +51,6 @@ class App extends Component {
   };
 
   render() {
-    console.log(this.state);
-    console.log("APP JS CURRENT URL PATH", window.location.href);
     return (
       <>
         <Location>

@@ -6,8 +6,6 @@ import { get, post } from "../../utilities";
 
 import { useForm } from "react-hook-form";
 
-// import { createCrumbEntry } from './API';
-
 const readImage = (blob) => {
   return new Promise((resolve, reject) => {
     const r = new FileReader();
@@ -50,19 +48,14 @@ const CrumbEntryForm = ({
     if (typeof fileInput.files[0] == "undefined") {
       data.image_name = "none";
 
-      post("/api/crumb", data).then((update) => {
-        // display this comment on the screen
-        console.log(update);
-      });
+      post("/api/crumb", data);
 
       updateCrumbList(data);
     } else {
       readImage(fileInput.files[0]).then((image) => {
         data.image_name = image;
-        console.log(data);
         post("/api/crumb", data).then((update) => {
-          // display this comment on the screen
-          console.log(update);
+          data.image_name = update.image_name;
         });
 
         updateCrumbList(data);

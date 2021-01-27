@@ -28,7 +28,7 @@ export default function EditTitlePopup({ journeyId }) {
     post("/api/journeytitle", {
       journey_id: journeyId,
       new_title: valueRef.current.value,
-    }).then((res) => console.log(res));
+    });
     window.location.reload();
   };
 

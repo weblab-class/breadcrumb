@@ -47,21 +47,17 @@ class MakeMapGL extends Component {
   componentDidMount() {
     window.addEventListener("resize", this.resize);
     this.resize();
-    console.log(this.props);
 
     const body = {
       journey_id: this.props.journeyId,
     };
-    console.log(body);
     get("/api/journeytitle", body).then((journey) => {
-      console.log("THESE ARE THE JORNUENSIUYGDIHJS", journey);
       journey.journey_title
         ? (document.title = journey.journey_title)
         : (document.title = "View Journey");
     });
 
     get("/api/journeycrumbs", body).then((crumbObjs) => {
-      console.log("THESE ARE THE CRUMB OBJS RETURNED", crumbObjs);
       crumbObjs.map((crumb) => {
         this.setState({
           crumbsList: this.state.crumbsList.concat(crumb),
@@ -70,9 +66,6 @@ class MakeMapGL extends Component {
         });
       });
     });
-
-    console.log("INITIAL PROPS", this.props);
-    console.log("INITIAL STATE", this.state);
   }
 
   componentWillUnmount() {
@@ -99,7 +92,6 @@ class MakeMapGL extends Component {
     };
 
     const showAddMarkerPopup = (event) => {
-      console.log("showing something");
       event.preventDefault();
 
       this.setState({
@@ -109,7 +101,6 @@ class MakeMapGL extends Component {
       });
     };
     const backButtonClicked = () => {
-      console.log("Back button clicked");
       const profilePath = "/profile/" + this.props.userId;
       navigate(profilePath);
     };
@@ -121,10 +112,8 @@ class MakeMapGL extends Component {
         viewport: { latitude: crumb.latitude, longitude: crumb.longitude, zoom: 7 },
       });
 
-      console.log(crumb.image_name);
       get("/api/crumbimage", { image_name: crumb.image_name }).then((image) => {
         console.log("received image");
-        console.log(image);
 
         if (image.img === "Err: could not find image") {
           this.setState({ selectedCrumbImage: null });
@@ -159,10 +148,8 @@ class MakeMapGL extends Component {
                     viewport: { latitude: crumb.latitude, longitude: crumb.longitude, zoom: 5 },
                   });
 
-                  console.log(crumb.image_name);
                   get("/api/crumbimage", { image_name: crumb.image_name }).then((image) => {
                     console.log("received image");
-                    console.log(image);
 
                     if (image.img === "Err: could not find image") {
                       this.setState({ selectedCrumbImage: null });
@@ -171,9 +158,7 @@ class MakeMapGL extends Component {
                     }
                   });
                 }}
-              >
-                {/* <img src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/apple/271/bread_1f35e.png"></img> */}
-              </button>
+              ></button>
             </Marker>
           ))}
 
@@ -183,7 +168,6 @@ class MakeMapGL extends Component {
               latitude={this.state.selectedCrumb.latitude}
               longitude={this.state.selectedCrumb.longitude}
               onClose={() => {
-                // console.log(this.state.selectedCrumb);
                 this.setState({
                   selectedCrumb: null,
                   selectedCrumbImage: null,
@@ -197,16 +181,6 @@ class MakeMapGL extends Component {
                 {this.state.selectedCrumbImage ? (
                   <img className="popup-image" src={this.state.selectedCrumbImage}></img>
                 ) : null}
-                {/* <br></br>
-                <button
-                  onClick={() => {
-                    console.log("shit");
-                    onDelete;
-                  }}
-                  className="create-button"
-                >
-                  Delete Entry
-                </button> */}
               </div>
             </Popup>
           ) : null}

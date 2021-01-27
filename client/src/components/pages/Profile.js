@@ -19,23 +19,14 @@ class Profile extends Component {
       delete: false,
     };
 
-    console.log("delete is" + this.state.delete);
-
     this.journeyNum = 0;
   }
 
   componentDidMount() {
     document.title = "Profile Page";
-    console.log("mounting!");
     get(`/api/whoami`, { userid: this.props.userId }).then((user) => this.setState({ user: user }));
     this.loadJourneys();
   }
-
-  //   componentDidUpdate(prevState) {
-  //     if (prevState.journeys !== this.state.journeys) {
-  //       this.loadJourneys();
-  //     }
-  //   }
 
   loadJourneys = () => {
     get("/api/journeys", { userid: this.props.userId }).then(async (journeys) => {
@@ -102,16 +93,12 @@ class Profile extends Component {
     let dateTime = this.getCurrentTime();
     let journeyId = first + last + dateTime[0];
     let formattedDateTime = dateTime[1];
-    console.log(formattedDateTime);
     let mapPath = "/journey/" + journeyId;
     post("/api/journey", {
       creator_id: this.state.user,
       journey_id: journeyId,
       crumbs: [],
       dateTime: formattedDateTime,
-    }).then((comment) => {
-      // display this comment on the screen
-      console.log(comment);
     });
     navigate(mapPath);
   };
@@ -139,9 +126,6 @@ class Profile extends Component {
           <button className="plus radius" onClick={this.makeNewMap}>
             {" "}
           </button>
-          {/* <button className="minus radius" onClick={this.startDelete}>
-            {" "}
-          </button> */}
         </div>
         <div className="infoContainer">
           <h1 className="profileName">{this.state.user.name}</h1>
@@ -151,9 +135,7 @@ class Profile extends Component {
               Click the journey you would like to delete. Click the minus button again to stop
               deleting.
             </h3>
-          ) : (
-            console.log("done deleting")
-          )}
+          ) : null}
         </div>
 
         {this.state.journeys && this.state.journeys.length > 0 ? (
