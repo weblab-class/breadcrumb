@@ -17,10 +17,16 @@ To build, run the following steps: </br>
     npm run
 ```
 
+Now, if you navigate to `localhost:5000`, you can interact with Breadcrumb!
+
 ## Technologies Used
 
-Node.js/Express, MongoDB/Mongoose, ReactJS, and Google Cloud
+Node.js/Express, MongoDB/Mongoose, ReactJS, MaterialUI, MapBox API, and the Google Cloud Platform
 
-## Contributors
+## Authors and Acknowledgement
 
 Made by Trudy Painter, Tejal Reddy, and Ishana Shastri (with love 💘)
+
+## Support
+
+Email tpainter@mit.edu, reddyt@mit.edu, and ishana@mit.edu with any questions or issues.
