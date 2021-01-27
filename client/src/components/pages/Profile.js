@@ -123,7 +123,6 @@ class Profile extends Component {
     return (
       <>
         <div className="journeyButton">
-          
           {/* https://stackoverflow.com/questions/55281672/make-plus-symbol-in-css */}
           <button className="plus radius" onClick={this.makeNewMap}>
             {" "}
@@ -131,7 +130,11 @@ class Profile extends Component {
         </div>
         <div className="infoContainer">
           <h1 className="profileName">{this.state.user.name}</h1>
-          <h3 className="journeyNumber">{this.journeyNum} journeys</h3>
+          {this.journeyNum == 0 || this.journeyNum > 1 ? (
+            <h3 className="journeyNumber">{this.journeyNum} journeys</h3>
+          ) : (
+            <h3 className="journeyNumber">{this.journeyNum} journey</h3>
+          )}
           {this.state.delete && this.state.journeys ? (
             <h3 className="deleteMessage">
               Click the journey you would like to delete. Click the minus button again to stop
