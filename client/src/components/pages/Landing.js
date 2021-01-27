@@ -26,18 +26,6 @@ class Landing extends Component {
           <h3>
             Scatter your breadcrumbs <br /> on your next journey.
           </h3>
-
-          <div className="centered">
-            <h2 className="demo">Demo!</h2>
-            <iframe
-              src="https://player.vimeo.com/video/504940062"
-              width="740"
-              height="395"
-              frameborder="0"
-              allow="autoplay; fullscreen; picture-in-picture"
-              allowfullscreen
-            ></iframe>
-          </div>
         </div>
       </>
     );
