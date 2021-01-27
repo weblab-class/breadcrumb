@@ -19,7 +19,12 @@ To build, run the following steps: </br>
 
 ## Technologies Used
 
-Node.js/Express, MongoDB/Mongoose, ReactJS, and Google Cloud
+Node.js/Express, MongoDB/Mongoose, ReactJS, Mapbox API, and Google Cloud
+
+## Resources Consulted
+
+[Coding Garden Travel Log App](https://www.youtube.com/watch?v=5pQsl9u_10M)
+[Google Cloud Platform Image Storage Example](https://github.com/weblab-workshops/gcp-example)
 
 ## Contributors
 
