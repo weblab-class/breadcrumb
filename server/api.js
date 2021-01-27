@@ -44,7 +44,6 @@ router.post("/initsocket", (req, res) => {
   res.send({});
 });
 
-// MAKE A NEW JOURNEY OBJECT
 router.post("/journey", auth.ensureLoggedIn, (req, res) => {
   const newJourney = new JourneyPost({
     creator_id: req.user._id,
@@ -57,12 +56,11 @@ router.post("/journey", auth.ensureLoggedIn, (req, res) => {
 });
 
 // DELETE A JOURNEY OBJECT AND CRUMBS ASSOCIATED WITH IT
-router.post("/deletejourney", (req, res) => {
+router.post("/deletejourney", auth.ensureLoggedIn, (req, res) => {
   JourneyPost.deleteOne({ journey_id: req.body.journey_id }).then((response) => {});
   CrumbEntry.deleteMany({ journey_id: req.body.journey_id }).then((response) => {});
 });
 
-// GET ALL THE CRUMBS FOR A CERTAIN JOURNEY
 router.get("/journeycrumbs", auth.ensureLoggedIn, (req, res) => {
   CrumbEntry.find({
     journey_id: req.query.journey_id,
@@ -71,7 +69,6 @@ router.get("/journeycrumbs", auth.ensureLoggedIn, (req, res) => {
   });
 });
 
-// GET IMAGE WHEN CRUMB CLICKED
 router.get("/crumbimage", auth.ensureLoggedIn, (req, res) => {
   downloadImagePromise(req.query.image_name)
     .catch((err) => "Err: could not find image")
@@ -93,13 +90,13 @@ router.post("/journeyupdate", auth.ensureLoggedIn, (req, res) => {
   });
 });
 
-router.get("/journeytitle", (req, res) => {
+router.get("/journeytitle", auth.ensureLoggedIn, (req, res) => {
   JourneyPost.findOne({ journey_id: req.query.journey_id }).then((journey) => {
     res.send(journey);
   });
 });
 
-router.post("/journeytitle", (req, res) => {
+router.post("/journeytitle", auth.ensureLoggedIn, (req, res) => {
   JourneyPost.findOne({ journey_id: req.body.journey_id }).then((journey) => {
     journey.journey_title = req.body.new_title;
     journey.save();
@@ -107,8 +104,7 @@ router.post("/journeytitle", (req, res) => {
   });
 });
 
-// GET ALL JOURNEYS FOR PROFILE PAGE
-router.get("/journeys", (req, res) => {
+router.get("/journeys", auth.ensureLoggedIn, (req, res) => {
   JourneyPost.find({
     creator_id: req.query.userid,
   }).then((journeys) => {
@@ -153,31 +149,8 @@ router.post("/crumb", auth.ensureLoggedIn, (req, res) => {
   }
 });
 
-router.post("/deletecrumb", (req, res) => {
-  CrumbEntry.deleteOne({ crumb_id: req.body.crumb_id }).then((response) => {
-    res.send(response);
-  });
-});
-
-// PROFILE PAGE ROUTES
 router.get("/user", (req, res) => {
   User.findById(req.query.userid).then((user) => {
-    res.send(user);
-  });
-});
-
-router.post("/user/bio", (req, res) => {
-  User.findById(req.user._id).then((user) => {
-    user.bio = req.body.content;
-    user.save();
-    res.send(user);
-  });
-});
-
-router.post("/user/location", (req, res) => {
-  User.findById(req.user._id).then((user) => {
-    user.location = req.body.content;
-    user.save();
     res.send(user);
   });
 });
