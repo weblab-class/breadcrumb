@@ -123,6 +123,8 @@ class Profile extends Component {
     return (
       <>
         <div className="journeyButton">
+          
+          {/* https://stackoverflow.com/questions/55281672/make-plus-symbol-in-css */}
           <button className="plus radius" onClick={this.makeNewMap}>
             {" "}
           </button>
