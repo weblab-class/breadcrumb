@@ -1,51 +1,51 @@
 .nav-icon {
-    background-color: var(--brown);
-    height: 24px;
-    width: 24px;
-    /* position: absolute;
+  background-color: var(--brown);
+  height: 24px;
+  width: 24px;
+  /* position: absolute;
     top: 80px;
     left: 20px; */
-    border-radius: 100px;
-    padding: 16px;
-  }
-  .nav-icon:hover{
-    cursor: pointer;
-  }
+  border-radius: 100px;
+  padding: 16px;
+}
+.nav-icon:hover {
+  cursor: pointer;
+}
 
-  .close-button {
-    display: flex;
-    flex-direction: row-reverse;
-    z-index: 9999;
-    padding: 20px;
-    color: var(--brown);
-  }
+.close-button {
+  display: flex;
+  flex-direction: row-reverse;
+  z-index: 9999;
+  padding: 20px;
+  color: var(--brown);
+}
 
-  .close-button:hover{
-    cursor: pointer;
-  }
+.close-button:hover {
+  cursor: pointer;
+}
 
-  .crumb-side-entry {
-    color: var(--brown);
-    margin: auto;
-    width: 300px;
-    border-radius: 10px;
-    background-color: var(--cream);
-    border: 1px solid var(--brown);
-    margin-bottom: 20px;
+.crumb-side-entry {
+  color: var(--brown);
+  margin: auto;
+  width: 300px;
+  border-radius: 10px;
+  background-color: var(--cream);
+  border: 1px solid var(--brown);
+  margin-bottom: 20px;
 
-    font-family: var(--bodyfont);
-    font-size: var(--m);
-    padding: 10px;
-  }
+  font-family: var(--bodyfont);
+  font-size: var(--m);
+  padding: 10px;
+}
 
-  .crumb-side-entry:hover {
-    cursor: pointer;
-  }
-  
-  .nav-menu {
-    background-color: var(--brown);
-    width: 350px;
-    height: 110vh;
+.crumb-side-entry:hover {
+  cursor: pointer;
+}
+
+.nav-menu {
+  background-color: var(--brown);
+  width: 350px;
+  height: 110vh;
   /* display: flex;
     flex-direction: column;
     justify-content: left; */
@@ -55,11 +55,13 @@
   top: 0px;
   transition: 850ms;
   overflow: hidden;
+  z-index: 2;
 }
 
 .nav-menu.active {
   left: 0;
   transition: 350ms;
+  z-index: 2;
 }
 
 span {

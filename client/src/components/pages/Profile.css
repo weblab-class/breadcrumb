@@ -91,7 +91,7 @@ body {
 }
 
 .flex-container > .Card-content {
-  padding: 45px 0px 45px 30px;
+  padding: 45px 30px 45px 30px;
 }
 
 .flex-container > .Card-container {
@@ -102,6 +102,7 @@ body {
   flex-grow: 0;
   height: auto;
   margin: 0.5em;
+  word-wrap: break-word;
 }
 
 h3.warning {

@@ -13,6 +13,7 @@ class Landing extends Component {
     super(props);
     // Initialize Default State
     this.state = {};
+    document.title = "Breadcrumb";
   }
 
   componentDidMount() {
@@ -40,7 +41,17 @@ class Landing extends Component {
           : 
           console.log('not signed in')
         } */}
-        <iframe src="https://player.vimeo.com/video/504940062" width="640" height="395" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+          <div className="centered">
+            <h2 className="demo">Demo!</h2>
+            <iframe
+              src="https://player.vimeo.com/video/504940062"
+              width="740"
+              height="395"
+              frameborder="0"
+              allow="autoplay; fullscreen; picture-in-picture"
+              allowfullscreen
+            ></iframe>
+          </div>
         </div>
       </>
     );

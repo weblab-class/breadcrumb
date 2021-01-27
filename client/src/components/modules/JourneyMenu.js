@@ -94,7 +94,12 @@ export default function JourneyMenu({ journeyId }) {
         >
           <EditTitlePopup journeyId={journeyId} />
           {options.map((option) => (
-            <MenuItem key={option} data-button={option} onClick={handleClose}>
+            <MenuItem
+              key={option}
+              data-button={option}
+              onKeyDown={(e) => e.stopPropagation()}
+              onClick={handleClose}
+            >
               {option}
             </MenuItem>
           ))}

@@ -49,7 +49,7 @@ class MakeMapGL extends Component {
     window.addEventListener("resize", this.resize);
     this.resize();
 
-    document.title = "Make A Journey";
+    document.title = "Make a Journey";
 
     const body = {
       journey_id: this.props.journeyId,
@@ -158,24 +158,25 @@ class MakeMapGL extends Component {
                 className="marker"
                 style={zoomAdjustedSize}
                 onClick={(event) => {
-                    event.preventDefault();
-                    this.setState({
-                      selectedCrumb: crumb,
-                      selectedCrumbImage: crumb.image_name,
-                    });
-  
-                    console.log(crumb.image_name);
-                    get("/api/crumbimage", { image_name: crumb.image_name }).then((image) => {
-                      console.log("received image");
-                      console.log(image);
-  
-                      if (image.img === "Err: could not find image") {
-                        this.setState({ selectedCrumbImage: null });
-                      } else {
-                        this.setState({ selectedCrumbImage: image.img });
-                      }
-                    });
-                  }}
+                  event.preventDefault();
+                  this.setState({
+                    selectedCrumb: crumb,
+                    selectedCrumbImage: crumb.image_name,
+                    viewport: { latitude: crumb.latitude, longitude: crumb.longitude, zoom: 5 },
+                  });
+
+                  console.log(crumb.image_name);
+                  get("/api/crumbimage", { image_name: crumb.image_name }).then((image) => {
+                    console.log("received image");
+                    console.log(image);
+
+                    if (image.img === "Err: could not find image") {
+                      this.setState({ selectedCrumbImage: null });
+                    } else {
+                      this.setState({ selectedCrumbImage: image.img });
+                    }
+                  });
+                }}
               >
                 {/* <img src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/apple/271/bread_1f35e.png"></img> */}
               </button>

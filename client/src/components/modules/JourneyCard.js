@@ -13,13 +13,12 @@ import { post } from "../../utilities";
  * @param {string} _id of the journey
  * @param {string} journey link
  * @param {string} date time of journey creation
- * @oaram {boolean} delete if the user is deleting journeys
+ * @param {boolean} delete if the user is deleting journeys
  * @param {string} user's journey number
  */
 class JourneyCard extends Component {
   constructor(props) {
     super(props);
-    console.log(this.props);
   }
 
   startDelete = () => {
@@ -33,11 +32,6 @@ class JourneyCard extends Component {
           <JourneyMenu journeyId={this.props.journeyId} />
         </div>
         <div className="Card-content">
-          {/* <div className="deleteButton">
-          <button className="minus radius" onClick={this.startDelete}>
-            {" "}
-          </button>
-        </div> */}
           {!this.props.journeyTitle ? (
             <Link to={this.props.journeyLink} className="u-link u-bold">
               {"My Journey #" + this.props.journeyIndex}
@@ -47,7 +41,6 @@ class JourneyCard extends Component {
               {this.props.journeyTitle}
             </Link>
           )}
-
           <p className="Card-storyContent">
             {this.props.dateTime.split(" ").slice(0, 3).join(" ")}
           </p>

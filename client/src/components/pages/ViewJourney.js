@@ -40,7 +40,6 @@ class MakeMapGL extends Component {
       crumbIdList: [],
       sideBarReady: null,
     };
-
   }
 
   mapRef = React.createRef();
@@ -48,12 +47,19 @@ class MakeMapGL extends Component {
   componentDidMount() {
     window.addEventListener("resize", this.resize);
     this.resize();
-    document.title = this.props.journeyTitle;
+    console.log(this.props);
 
     const body = {
       journey_id: this.props.journeyId,
     };
     console.log(body);
+    get("/api/journeytitle", body).then((journey) => {
+      console.log("THESE ARE THE JORNUENSIUYGDIHJS", journey);
+      journey.journey_title
+        ? (document.title = journey.journey_title)
+        : (document.title = "View Journey");
+    });
+
     get("/api/journeycrumbs", body).then((crumbObjs) => {
       console.log("THESE ARE THE CRUMB OBJS RETURNED", crumbObjs);
       crumbObjs.map((crumb) => {
@@ -112,6 +118,7 @@ class MakeMapGL extends Component {
       this.setState({
         selectedCrumb: crumb,
         selectedCrumbImage: crumb.image_name,
+        viewport: { latitude: crumb.latitude, longitude: crumb.longitude, zoom: 7 },
       });
 
       console.log(crumb.image_name);
@@ -125,7 +132,7 @@ class MakeMapGL extends Component {
           this.setState({ selectedCrumbImage: image.img });
         }
       });
-  }
+    };
 
     return (
       <div>
@@ -149,6 +156,7 @@ class MakeMapGL extends Component {
                   this.setState({
                     selectedCrumb: crumb,
                     selectedCrumbImage: crumb.image_name,
+                    viewport: { latitude: crumb.latitude, longitude: crumb.longitude, zoom: 5 },
                   });
 
                   console.log(crumb.image_name);
@@ -207,12 +215,12 @@ class MakeMapGL extends Component {
         {/* 4️⃣ HEADER SECTION */}
 
         <div className="header">
-          {this.state.sideBarReady ? 
-          <SideBar crumbs={this.state.crumbsList} updateSelectedCrumb={updateSelectedCrumb}/> 
-          : null}
+          {this.state.sideBarReady ? (
+            <SideBar crumbs={this.state.crumbsList} updateSelectedCrumb={updateSelectedCrumb} />
+          ) : null}
         </div>
-        <button className="finish-button" onClick={backButtonClicked}>
-          Back
+        <button className="back-button" onClick={backButtonClicked}>
+          Return to Profile
         </button>
       </div>
     );

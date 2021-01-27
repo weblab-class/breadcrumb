@@ -40,12 +40,10 @@ export default function EditTitlePopup({ journeyId }) {
 
   return (
     <div>
-      <MenuItem key="hi" onClick={handleClickOpen}>
+      <MenuItem key="edit" onClick={handleClickOpen}>
         Edit journey title
       </MenuItem>
-      {/* <div className="popup" onClick={handleClickOpen}>
-        Edit journey title
-      </div> */}
+
       <StyledDialog
         open={open}
         onClose={handleClose}
@@ -58,6 +56,7 @@ export default function EditTitlePopup({ journeyId }) {
           <TextField
             inputRef={valueRef}
             autoFocus
+            onKeyDown={(e) => e.stopPropagation()}
             backgroundcolor="#85523C"
             margin="dense"
             inputProps={{ maxLength: 20 }}

@@ -105,6 +105,14 @@ router.post("/journeyupdate", auth.ensureLoggedIn, (req, res) => {
   });
 });
 
+router.get("/journeytitle", (req, res) => {
+  console.log("made this post request here!!!!!!!");
+  console.log(req.body);
+  JourneyPost.findOne({ journey_id: req.query.journey_id }).then((journey) => {
+    res.send(journey);
+  });
+});
+
 router.post("/journeytitle", (req, res) => {
   console.log("made this post request here");
   console.log(req.body);

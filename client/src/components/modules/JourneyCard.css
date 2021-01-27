@@ -1,11 +1,12 @@
 .Card-container {
   border: var(--brown) 1px solid;
   border-radius: var(--xs);
-  margin-top: var(--m); 
+  margin-top: var(--m);
 }
 
 .Card-content {
   padding: 45px 0px 45px 30px;
+  margin-right: -54px;
 }
 .Card-story {
   padding: var(--m) var(--l);
