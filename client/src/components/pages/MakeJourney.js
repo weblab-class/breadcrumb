@@ -202,16 +202,6 @@ class MakeMapGL extends Component {
                 {this.state.selectedCrumbImage ? (
                   <img className="popup-image" src={this.state.selectedCrumbImage}></img>
                 ) : null}
-                {/* <br></br>
-                <button
-                  onClick={() => {
-                    console.log("shit");
-                    onDelete;
-                  }}
-                  className="create-button"
-                >
-                  Delete Entry
-                </button> */}
               </div>
             </Popup>
           ) : null}
@@ -234,6 +224,13 @@ class MakeMapGL extends Component {
                   user_id={this.props.userId}
                   current_crumbs={this.state.crumbsList}
                   updateCrumbList={(crumb) => {
+
+                    this.setState({
+                      crumbsList: this.state.crumbsList.concat(crumb),
+                      crumbIdList: this.state.crumbIdList.concat(crumb.crumb_id),
+                      addNewEntry: null,
+                    });
+
                     const body = {
                       journey_id: this.props.journeyId,
                       crumbs: this.state.crumbIdList,
@@ -242,12 +239,6 @@ class MakeMapGL extends Component {
                     post("/api/journeyupdate", body).then((update) => {
                       // display this comment on the screen
                       console.log(update);
-                    });
-
-                    this.setState({
-                      crumbsList: this.state.crumbsList.concat(crumb),
-                      crumbIdList: this.state.crumbIdList.concat(crumb.crumb_id),
-                      addNewEntry: null,
                     });
                   }}
                 />

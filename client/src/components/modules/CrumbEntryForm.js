@@ -62,9 +62,11 @@ const CrumbEntryForm = ({
         console.log(data);
         post("/api/crumb", data).then((update) => {
           // display this comment on the screen
-          console.log(update);
+          console.log("RESPONSE FROM THE API", update);
+          data.image_name = update.image_name;
         });
 
+        console.log("THIS IS THE DATA PASSED AS A NEW CRUMB", data);
         updateCrumbList(data);
       });
     }
