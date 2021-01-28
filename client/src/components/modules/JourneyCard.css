@@ -57,3 +57,7 @@
 .Card-menu {
   float: right;
 }
+
+.Card-link {
+  color: var(--brown) !important;
+}

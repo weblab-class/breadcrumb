@@ -33,11 +33,11 @@ class JourneyCard extends Component {
         </div>
         <div className="Card-content">
           {!this.props.journeyTitle ? (
-            <Link to={this.props.journeyLink} className="u-link u-bold">
+            <Link to={this.props.journeyLink} className="Card-link u-link u-bold">
               {"My Journey #" + this.props.journeyIndex}
             </Link>
           ) : (
-            <Link to={this.props.journeyLink} className="u-link u-bold">
+            <Link to={this.props.journeyLink} className="Card-link u-link u-bold">
               {this.props.journeyTitle}
             </Link>
           )}
