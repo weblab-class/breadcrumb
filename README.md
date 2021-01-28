@@ -16,7 +16,7 @@ To build, run the following steps: </br>
     git clone https://github.com/weblab-class/breadcrumb
     npm install
     npm start
-    npm run
+    npm run hotloader
 ```
 
 Now, if you navigate to `localhost:5000`, you can interact with Breadcrumb!
